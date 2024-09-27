@@ -1,0 +1,174 @@
+
+@use 'sass:map';
+@use '../node_modules/@angular/material' as mat;
+
+
+// Define your color palettes here (como en tu ejemplo)
+$_palettes: (
+  primary: (
+    0: #000000,
+    10: #2c0050,
+    20: #4a007f,
+    25: #590098,
+    30: #6906b0,
+    35: #7521bc,
+    40: #8232c9,
+    50: #9d4fe4,
+    60: #b86cff,
+    70: #cb93ff,
+    80: #deb7ff,
+    90: #f0dbff,
+    95: #faecff,
+    98: #fff7fe,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  secondary: (
+    0: #000000,
+    10: #2a0749,
+    20: #41205f,
+    25: #4c2c6b,
+    30: #583877,
+    35: #654484,
+    40: #715091,
+    50: #8b68ab,
+    60: #a682c7,
+    70: #c29ce3,
+    80: #deb7ff,
+    90: #f0dbff,
+    95: #faecff,
+    98: #fff7fe,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  tertiary: (
+    0: #000000,
+    10: #3c0028,
+    20: #620043,
+    25: #760051,
+    30: #8a0060,
+    35: #9c0f6d,
+    40: #ab227a,
+    50: #cb3f94,
+    60: #ec5aaf,
+    70: #ff80c6,
+    80: #ffafd6,
+    90: #ffd8e8,
+    95: #ffecf2,
+    98: #fff8f8,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    10: #1f1a23,
+    20: #342e38,
+    25: #3f3943,
+    30: #4b444f,
+    35: #57505a,
+    40: #635c67,
+    50: #7c7480,
+    60: #968e9a,
+    70: #b1a8b4,
+    80: #cdc3d0,
+    90: #eadfec,
+    95: #f8edfa,
+    98: #fff7fe,
+    99: #fffbff,
+    100: #ffffff,
+    4: #110c15,
+    6: #16111a,
+    12: #231e27,
+    17: #2d2831,
+    22: #38333c,
+    24: #3d3741,
+    87: #e1d7e3,
+    92: #efe5f2,
+    94: #f5eaf7,
+    96: #fbf0fd,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #201926,
+    20: #352d3c,
+    25: #413847,
+    30: #4c4353,
+    35: #584f5f,
+    40: #655b6b,
+    50: #7e7384,
+    60: #988d9f,
+    70: #b3a7ba,
+    80: #cfc2d5,
+    90: #ecdef2,
+    95: #faecff,
+    98: #fff7fe,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+);
+
+$_rest: (
+  secondary: map.get($_palettes, secondary),
+  neutral: map.get($_palettes, neutral),
+  neutral-variant: map.get($_palettes,  neutral-variant),
+  error: map.get($_palettes, error),
+);
+$_primary: map.merge(map.get($_palettes, primary), $_rest);
+$_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
+
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: $_primary,
+    tertiary: $_tertiary,
+    use-system-variables: true,
+  ),
+  typography: (
+    use-system-variables: true,
+  ),
+));
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: $_primary,
+    tertiary: $_tertiary,
+    use-system-variables: true,
+  ),
+  typography: (
+    use-system-variables: true,
+  ),
+));
+
+// Aplicar temas
+// Aplicar temas dentro de un selector
+body.light-theme {
+    background-color: #ffffff; /* Color de fondo claro */
+    color: #000000; /* Color de texto oscuro */
+  }
+
+body.dark-theme {
+    background-color: #000000; /* Color de fondo oscuro */
+  color: #ffffff;
+ 
+  
+}
+
+
