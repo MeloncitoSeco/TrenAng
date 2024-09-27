@@ -12,6 +12,7 @@
     opacity: 0;
     width: 0;
     height: 0;
+    
   }
   
   /* The slider */
@@ -26,6 +27,7 @@
     box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
     transition: .4s;
     border-radius: 5px;
+    
   }
   
   .slider:before {
@@ -36,15 +38,17 @@
     border-radius: 0px;
     left: 0.3em;
     bottom: 0.3em;
-    background-color: white;
+    background-color: #bfbfbf;
     transition: .4s;
+    
   }
   
   input:checked + .slider {
-    background-color: #ffffff;
+    background-color: #bfbfbf;
     box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
   }
   
   input:checked + .slider:before {
     transform: translateX(2.8em) rotate(360deg);
+    background-color: black;
   }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from '../../services/sidenav/sidenav.service'; // Ajusta la ruta según tu estructura
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {FotosComponent} from '../../forum/publications/fotos/fotos.component';
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
-  imports: [MatSidenavModule],
+  imports: [MatSidenavModule,FotosComponent],
   
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss',

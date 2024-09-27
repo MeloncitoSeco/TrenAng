@@ -157,16 +157,47 @@ $dark-theme: mat.define-theme((
   ),
 ));
 
+body {
+  font-weight:bold
+}
+
 // Aplicar temas
 // Aplicar temas dentro de un selector
 body.light-theme {
     background-color: #ffffff; /* Color de fondo claro */
-    color: #000000; /* Color de texto oscuro */
+    color: #6d6d6d; /* Color de texto oscuro */
+    .colorChanger {
+      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+      background-color: #e0e0e0;
+      
+    }
+
+    .topbar {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+  
+      background-color: #e0e0e0; // Color de fondo para el tema claro
+      box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1);
+    }
+    
   }
 
 body.dark-theme {
     background-color: #000000; /* Color de fondo oscuro */
-  color: #ffffff;
+  color: #bfbfbf;
+  .colorChanger {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #3b3b3b;
+    box-shadow: rgba(0, 0, 0, 0.405) 0px 30px 50px -12px inset, rgba(113, 99, 99, 0.345) 0px 18px 26px -18px inset;
+  }
+  .topbar {
+    border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #434343; // Tema oscuro
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.3);
+  }
  
   
 }
