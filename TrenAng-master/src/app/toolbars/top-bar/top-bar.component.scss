@@ -3,9 +3,11 @@
     flex: 1 1 auto;
   }
   .topbar {
+    position: fixed;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    z-index: 2;
   
     body.dark-theme & {
       // Estilo por defecto
