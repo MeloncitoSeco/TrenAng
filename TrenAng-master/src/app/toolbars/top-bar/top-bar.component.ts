@@ -18,6 +18,7 @@ export class TopBarComponent {
 
   toggleSidenav() {
     this.sidenavService.toggle(); // Llama al servicio para alternar el estado
+    
   }
 
   

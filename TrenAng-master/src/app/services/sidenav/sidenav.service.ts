@@ -9,11 +9,18 @@ export class SidenavService {
   isOpen$ = this.isOpenSubject.asObservable();
 
   toggle() {
+    if(!this.isOpenSubject.value){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    }
     this.isOpenSubject.next(!this.isOpenSubject.value);
+    
+    
   }
 
   open() {
     this.isOpenSubject.next(true);
+    
   }
 
   close() {

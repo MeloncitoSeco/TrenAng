@@ -3,15 +3,16 @@
     top: -10px;
     text-align: left;
     /* Alineación del texto a la izquierda */
-    height: 100%;
+    height: auto;
     padding-top: -10px;
     z-index: 1;
+    border: 1px solid #ff0000;
 
 }
 
 .inside {
     padding-left: 10px;
-    padding-top: 45px;
+    padding-top: 30px;
     overflow: hidden;
     position: relative;
 
@@ -28,13 +29,8 @@
 
 
 .outside {
-    margin-top: 20px;
-    width: 80vw;
-    height: fit-content;
-    border : 1px solid black;
-    float:left;
+    padding: 20px;
     /* Padding de 20 píxeles */
-   
 }
 
 
@@ -52,5 +48,3 @@
         box-shadow: inset -5px -5px 10px #878787, inset 5px 5px 10px #e0e0e0;
     }
 }
-
-
