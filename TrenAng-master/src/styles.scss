@@ -16,6 +16,10 @@ body.light-theme {
     background-color: #e0e0e0;
     color: #6d6d6d;
   }
+  .backgroundChanger {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #ffffff; /* Color de fondo claro */
+  }
   .colorChangerIcons {
       transition: background-color 0.5s ease, box-shadow 0.5s ease;
       background-color: #e0e0e0;
@@ -57,6 +61,10 @@ body.dark-theme {
         transition: background-color 0.5s ease, box-shadow 0.5s ease;
       background-color: #3b3b3b;
       color: #bfbfbf;
+    }
+    .backgroundChanger {
+        transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        background-color: #000000; /* Color de fondo oscuro */
     }
     .topbar {
         transition: background-color 0.5s ease, box-shadow 0.5s ease;

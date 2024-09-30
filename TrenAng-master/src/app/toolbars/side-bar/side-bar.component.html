@@ -13,21 +13,18 @@
         
         
         
-      <p>2Contenido del menú de la barra lateral</p>
-      <p>1Contenido del menú de la barra lateral</p>
-      <p>1Contenido del menú de la barra lateral</p>
-      <p>1Contenido del menú de la barra lateral</p>
-      <p>1Contenido del menú de la barra lateral</p>
-      <p>1Contenido del menú de la barra lateral</p>
-      <p>1Contenido del menú de la barra lateral</p>
-      <p>1Contenido del menú de la barra lateral</p>
+      <nav>
+        <a routerLink="/">Home</a>
+        <a routerLink="/publications">Publicaciones</a>
+        <a routerLink="/form">Nueva publicacion</a>
+      </nav>
       
       
       
       
       
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="backgroundChanger">
       <router-outlet class="outside "> </router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
