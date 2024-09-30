@@ -171,7 +171,11 @@ body.light-theme {
       background-color: #e0e0e0;
       
     }
-
+    .colorChangerIcons {
+      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+      background-color: #e0e0e0;
+      
+    }
     .topbar {
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;
@@ -187,6 +191,11 @@ body.dark-theme {
     background-color: #000000; /* Color de fondo oscuro */
   color: #bfbfbf;
   .colorChanger {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #3b3b3b;
+    box-shadow: rgba(0, 0, 0, 0.405) 0px 30px 50px -12px inset, rgba(113, 99, 99, 0.345) 0px 18px 26px -18px inset;
+  }
+  .colorChangerIcons {
     transition: background-color 0.5s ease, box-shadow 0.5s ease;
     background-color: #3b3b3b;
     box-shadow: rgba(0, 0, 0, 0.405) 0px 30px 50px -12px inset, rgba(113, 99, 99, 0.345) 0px 18px 26px -18px inset;

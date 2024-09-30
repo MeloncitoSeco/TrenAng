@@ -1,27 +1,33 @@
 <mat-toolbar class="topbar">
-  <button mat-icon-button (click)="toggleSidenav()">
+  <button mat-icon-button (click)="toggleSidenav()"
+    class="colorChangerIcons">
     <mat-icon>menu</mat-icon>
   </button>
+
   <span>FotoTren.es</span>
+
   <span class="spacer"></span>
+
   <app-theme-changer/>
 
-
-  <button mat-icon-button class="example-icon" aria-label="Icono para ir">
+  <button 
+    mat-icon-button 
+    class="colorChangerIcons" >
     <mat-icon>favorite</mat-icon>
   </button>
+
   <button
     mat-icon-button
-    class="material-symbols-outlined"
-    aria-label="Example icon-button with share icon"
+    class="colorChangerIcons"
   >
     <mat-icon>key</mat-icon>
   </button>
+
   <button
     mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with share icon"
+    class="colorChangerIcons"
   >
     <mat-icon>share</mat-icon>
   </button>
+
 </mat-toolbar>

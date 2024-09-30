@@ -4,16 +4,33 @@
     text-align: left;
     /* Alineación del texto a la izquierda */
     height: 100%;
-    padding-top: -10px;
+    top: 70px;
     z-index: 1;
 
 }
 
-.inside {
+.inside{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+}
+
+.space{
+    height: 15px;
+    width: 10px;
+    border: 1px solid #ff0000;
+}
+
+.insidePre {
+   
     padding-left: 10px;
-    padding-top: 45px;
+    padding-top: 15px;
     overflow: hidden;
     position: relative;
+    border: 1px solid #ff0000;
+    
 
     h1 {
         font-size: 20px;
@@ -21,18 +38,20 @@
     }
 
     width: fit-content;
-    height: fit-content;
+    height: 70vh;
     padding-left: 10px;
     padding-right: 15px;
 }
 
 
 .outside {
-    margin-top: 20px;
+    top: 50px;
+    padding-left: 10px;
+    padding-top: 15px;
     width: 0px;
-    height: 80vh;
+    height: 100%;
     float:left;
-   
+    border: 1px solid #ff0000;
 }
 
 
