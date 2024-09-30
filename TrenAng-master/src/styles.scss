@@ -1,12 +1,11 @@
 @use "@angular/material" as mat;
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    height: 100%;
-    
-  
-    transition: background-color 0.5s ease, color 0.5s ease;
-  }
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  height: 100%;
+
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
 // Estilos para el tema claro
 body.light-theme {
   background-color: #ffffff; /* Color de fondo claro */
@@ -21,16 +20,24 @@ body.light-theme {
     background-color: #ffffff; /* Color de fondo claro */
   }
   .colorChangerIcons {
-      transition: background-color 0.5s ease, box-shadow 0.5s ease;
-      background-color: #e0e0e0;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #e0e0e0;
     color: #6d6d6d;
-      
-    }
-    .colorChangerText{
-        transition: background-color 0.5s ease, box-shadow 0.5s ease;
-        background-color: #ffffff; /* Color de fondo claro */
-        color: #6d6d6d;
-    }
+  }
+  .colorChangerText {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    color: #020202;
+  }
+  .colorChangerTextNoBg {
+    color: #6d6d6d;
+  }
+
+  .sideBar {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    border-radius: 20px;
+    background: linear-gradient(315deg, #f0f0f0, #cacaca);
+    box-shadow: -28px -28px 56px #8b8b8b, 28px 28px 56px #ffffff;
+  }
 
   .topbar {
     border-bottom-left-radius: 8px;
@@ -44,35 +51,44 @@ body.light-theme {
 
 // Estilos para el tema oscuro
 body.dark-theme {
-    background-color: #000000; /* Color de fondo oscuro */
+  background-color: #000000; /* Color de fondo oscuro */
+  color: #bfbfbf;
+  .colorChanger {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #3b3b3b;
     color: #bfbfbf;
-    .colorChanger {
-      transition: background-color 0.5s ease, box-shadow 0.5s ease;
-      background-color: #3b3b3b;
-      color: #bfbfbf;
-      box-shadow: rgba(0, 0, 0, 0.405) 0px 30px 50px -12px inset, rgba(113, 99, 99, 0.345) 0px 18px 26px -18px inset;
-    }
-    .colorChangerIcons {
-      transition: background-color 0.5s ease, box-shadow 0.5s ease;
-      background-color: #434343;
-      color: #bfbfbf;
-    }
-    .colorChangerText{
-        transition: background-color 0.5s ease, box-shadow 0.5s ease;
-      background-color: #3b3b3b;
-      color: #bfbfbf;
-    }
-    .backgroundChanger {
-        transition: background-color 0.5s ease, box-shadow 0.5s ease;
-        background-color: #000000; /* Color de fondo oscuro */
-    }
-    .topbar {
-        transition: background-color 0.5s ease, box-shadow 0.5s ease;
-        color: #bfbfbf;
-      border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        transition: background-color 0.5s ease, box-shadow 0.5s ease;
-      background-color: #434343; // Tema oscuro
-      box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.3);
-    }
+    box-shadow: rgba(0, 0, 0, 0.405) 0px 30px 50px -12px inset,
+      rgba(113, 99, 99, 0.345) 0px 18px 26px -18px inset;
+  }
+  .colorChangerIcons {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #434343;
+    color: #bfbfbf;
+  }
+  .colorChangerText {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #3b3b3b;
+    color: #bfbfbf;
+  }
+  .colorChangerTextNoBg {
+    color: #e0e0e0;
+  }
+  .backgroundChanger {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #000000; /* Color de fondo oscuro */
+  }
+  .sideBar {
+    border-radius: 20px;
+    background: #3b3b3b;
+    box-shadow: inset -23px -23px 46px #252525, inset 23px 23px 46px #515151;
+  }
+  .topbar {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    color: #bfbfbf;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: #434343; // Tema oscuro
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.3);
+  }
 }

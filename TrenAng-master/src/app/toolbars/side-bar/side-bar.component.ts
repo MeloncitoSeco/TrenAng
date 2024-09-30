@@ -24,4 +24,5 @@ export class SideBarComponent implements OnInit {
       this.isOpen = isOpen; // Suscribirse a los cambios en el estado
     });
   }
+  
 }
