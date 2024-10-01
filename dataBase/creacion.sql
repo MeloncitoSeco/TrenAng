@@ -10,20 +10,20 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema servidor
+-- Schema fotoTren
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema servidor
+-- Schema fotoTren
 -- -----------------------------------------------------
-DROP  SCHEMA IF EXISTS `servidor`;
-CREATE SCHEMA IF NOT EXISTS `servidor` DEFAULT CHARACTER SET utf8mb3 ;
-USE `servidor` ;
+DROP  SCHEMA IF EXISTS `fotoTren`;
+CREATE SCHEMA IF NOT EXISTS `fotoTren` DEFAULT CHARACTER SET utf8mb3 ;
+USE `fotoTren` ;
 
 -- -----------------------------------------------------
--- Table `servidor`.`tipoTren`
+-- Table `fotoTren`.`tipoTren`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `servidor`.`tipoTren` (
+CREATE TABLE IF NOT EXISTS `fotoTren`.`tipoTren` (
   `tipoTren` INT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`tipoTren`))
@@ -32,9 +32,9 @@ DEFAULT CHARACTER SET = armscii8;
 
 
 -- -----------------------------------------------------
--- Table `servidor`.`Tren`
+-- Table `fotoTren`.`Tren`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `servidor`.`Tren` (
+CREATE TABLE IF NOT EXISTS `fotoTren`.`Tren` (
   `trenId` INT NOT NULL,
   `modelo` VARCHAR(24) NOT NULL,
   `tipoTren` INT NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `servidor`.`Tren` (
   INDEX `tren-tipo_idx` (`tipoTren` ASC),
   CONSTRAINT `tren-tipo`
     FOREIGN KEY (`tipoTren`)
-    REFERENCES `servidor`.`tipoTren` (`tipoTren`)
+    REFERENCES `fotoTren`.`tipoTren` (`tipoTren`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -51,9 +51,9 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `servidor`.`Usuario`
+-- Table `fotoTren`.`Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `servidor`.`usuario` (
+CREATE TABLE IF NOT EXISTS `fotoTren`.`usuario` (
   `nombre` VARCHAR(45) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `contra` VARCHAR(255) NOT NULL,
@@ -63,26 +63,27 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `servidor`.`Publicacion`
+-- Table `fotoTren`.`Publicacion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `servidor`.`Publicacion` (
+CREATE TABLE IF NOT EXISTS `fotoTren`.`Publicacion` (
   `pubId` INT NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `trenId` INT NOT NULL,
   `titulo` VARCHAR(120) NOT NULL,
   `posicion` VARCHAR(45) NOT NULL,
   `comAuto` VARCHAR(45) NOT NULL,
+  `createdAt` timestamp default current_timestamp,
   PRIMARY KEY (`pubId`),
   INDEX `pub-usu_idx` (`email` ASC),
   INDEX `pub-tren_idx` (`trenId` ASC) ,
   CONSTRAINT `pub-tren`
     FOREIGN KEY (`trenId`)
-    REFERENCES `servidor`.`Tren` (`trenId`)
+    REFERENCES `fotoTren`.`Tren` (`trenId`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT `pub-usu`
     FOREIGN KEY (`email`)
-    REFERENCES `servidor`.`Usuario` (`email`)
+    REFERENCES `fotoTren`.`Usuario` (`email`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -90,9 +91,9 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `servidor`.`Imagen`
+-- Table `fotoTren`.`Imagen`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `servidor`.`Imagen` (
+CREATE TABLE IF NOT EXISTS `fotoTren`.`Imagen` (
   `imgId` INT NOT NULL AUTO_INCREMENT,
   `fecha` DATETIME NOT NULL,
   `pubId` INT NOT NULL,
@@ -102,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `servidor`.`Imagen` (
   INDEX `img-pub_idx` (`pubId` ASC),
   CONSTRAINT `img-pub`
     FOREIGN KEY (`pubId`)
-    REFERENCES `servidor`.`Publicacion` (`pubId`)
+    REFERENCES `fotoTren`.`Publicacion` (`pubId`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -115,62 +116,62 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `servidor`.`tipoTren`
+-- Data for table `fotoTren`.`tipoTren`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `servidor`;
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (1, 'Ave');
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (2, 'Alvia');
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (3, 'Avant');
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (4, 'IRYO');
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (5, 'OUIGO');
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (6, 'LD');
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (7, 'MD');
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (8, 'Cercanias/Rodalies');
-INSERT INTO `servidor`.`tipoTren` (`tipoTren`, `nombre`) VALUES (9, 'AM');
+USE `fotoTren`;
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (1, 'Ave');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (2, 'Alvia');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (3, 'Avant');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (4, 'IRYO');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (5, 'OUIGO');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (6, 'LD');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (7, 'MD');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (8, 'Cercanias/Rodalies');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (9, 'AM');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `servidor`.`Tren`
+-- Data for table `fotoTren`.`Tren`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `servidor`;
-INSERT INTO `servidor`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (1, 'Civia', 8, 2003);
-INSERT INTO `servidor`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (2, 'IRYO', 4, 2020);
+USE `fotoTren`;
+INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (1, 'Civia', 8, 2003);
+INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (2, 'IRYO', 4, 2020);
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `servidor`.`Usuario`
+-- Data for table `fotoTren`.`Usuario`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `servidor`;
-INSERT INTO `servidor`.`usuario` (`nombre`, `email`, `contra`) VALUES ('Santi', 'santiago@gmail.com', '1234');
+USE `fotoTren`;
+INSERT INTO `fotoTren`.`usuario` (`nombre`, `email`, `contra`) VALUES ('Santi', 'santiago@gmail.com', '1234');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `servidor`.`Publicacion`
+-- Data for table `fotoTren`.`Publicacion`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `servidor`;
-INSERT INTO `servidor`.`Publicacion` (`pubId`, `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES (1, 'santiago@gmail.com', 1, 'Primer Civia', 'Quieto', 'Andalucía');
-INSERT INTO `servidor`.`Publicacion` (`pubId`, `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES (2, 'santiago@gmail.com', 2, 'Iryo', 'Quieto', 'Navarra');
+USE `fotoTren`;
+INSERT INTO `fotoTren`.`Publicacion` (`pubId`, `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES (1, 'santiago@gmail.com', 1, 'Primer Civia', 'Quieto', 'Andalucía');
+INSERT INTO `fotoTren`.`Publicacion` (`pubId`, `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES (2, 'santiago@gmail.com', 2, 'Iryo', 'Quieto', 'Navarra');
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `servidor`.`Imagen`
+-- Data for table `fotoTren`.`Imagen`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `servidor`;
-INSERT INTO `servidor`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (10, '2013-03-20 19:56:00', 1, 'rth65ufgh', 1);
-INSERT INTO `servidor`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (11, '2022-04-20 19:56:00', 2, 'rth65ufgh', 1);
-INSERT INTO `servidor`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (12, '2022-04-20 19:56:00', 2, 'rth65ufgh', 1);
+USE `fotoTren`;
+INSERT INTO `fotoTren`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (10, '2013-03-20 19:56:00', 1, 'rth65ufgh', 1);
+INSERT INTO `fotoTren`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (11, '2022-04-20 19:56:00', 2, 'rth65ufgh', 1);
+INSERT INTO `fotoTren`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (12, '2022-04-20 19:56:00', 2, 'rth65ufgh', 1);
 
 
 COMMIT;
