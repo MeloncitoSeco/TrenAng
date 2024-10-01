@@ -1,35 +1,118 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const morgan_1 = __importDefault(require("morgan"));
-const cors_1 = __importDefault(require("cors"));
-const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
-const fotoTrenRoutes_1 = __importDefault(require("./routes/fotoTrenRoutes"));
-class Server {
-    constructor() {
-        this.app = (0, express_1.default)();
-        this.config();
-        this.routes();
+const express = require("express");
+const mysql = require("mysql");
+const bodyParser = require("body-parser");
+
+const app = express();
+
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  next();
+});
+
+app.use(bodyParser.json());
+
+const PORT = 3000;
+
+const conection = mysql.createConnection({
+  host: "localhost",
+  user: "Santi",
+  password: "",
+  database: "fotoTren",
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+conection.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+app.get("/api/publications", (req, res) => {
+  const query = "SELECT * FROM Publicacion";
+  conection.query(query, (err, result) => {
+    if (err) console.log(err.message);
+
+    if (result.length > 0) {
+      res.json(result); // Enviar el resultado como respuesta
+    } else {
+      res.json("No hay publicaciones"); // Mensaje si no hay resultados
     }
-    config() {
-        this.app.set('port', process.env.PORT || 3000);
-        this.app.use((0, morgan_1.default)('dev'));
-        this.app.use((0, cors_1.default)());
-        this.app.use(express_1.default.json());
-        this.app.use(express_1.default.urlencoded({ extended: true })); //TODO ESTO ESTA TOCADO
+  });
+});
+
+app.get("/api/publications/:pubId", (req, res) => {
+  const { pubId } = req.params;
+  const query = `SELECT * FROM Publicacion WHERE pubId = ${pubId}`;
+  console.log(query);
+  conection.query(query, (err, result) => {
+    if (err) return console.log(err.message);
+
+    if (result.length > 0) {
+      res.json(result);
+    } else {
+      res.json("No hay publicaciones con ese id");
     }
-    routes() {
-        this.app.use(indexRoutes_1.default);
-        this.app.use('/api/fotosTren', fotoTrenRoutes_1.default);
+  });
+});
+
+app.post("/api/publications", (req, res) => {
+  const usuario = {
+    pubId: req.body.pubId,
+    email: req.body.email,
+    tremId: req.body.trenId,
+    titulo: req.body.titulo,
+    posicion: req.body.posicion,
+    comAuto: req.body.comAuto,
+  };
+  const query = `INSERT INTO Publicacion ?`;
+  conection.query(query, usuario, (err, result) => {
+    if (err) return console.log(err.message);
+    res.json("Se inserto correctamente");
+  });
+});
+
+app.put("/api/publications/actualizar/:pubId", (req, res) => {
+  const pubId = req.params;
+  const usuario = {
+    email: req.body.email,
+    tremId: req.body.trenId,
+    titulo: req.body.titulo,
+    posicion: req.body.posicion,
+    comAuto: req.body.comAuto,
+  };
+  const query = `UPDATE Publicacion SET ? WHERE id = ${pubId}`;
+  conection.query(query, usuario, (err, result) => {
+    if (err) return console.log(err.message);
+    res.json("Se actualizo correctamente");
+  });
+});
+
+
+// DELETE
+app.delete("/api/publications/delete/:pubId", (req, res) => {
+  const { pubId } = req.params;
+  const query = "DELETE FROM Publicacion WHERE pubId = ?"; // Ajusta el nombre de la columna si es necesario
+  console.log(query);
+  // Usa el pubId como parámetro para evitar SQL Injection
+  conection.query(query, [pubId], (err, result) => {
+    if (err) {
+      console.log(err.message);
+      return res
+        .status(500)
+        .json({ error: "Error al eliminar la publicación" });
     }
-    start() {
-        this.app.listen(this.app.get('port'), () => {
-            console.log('Server on port', this.app.get('port'));
-        });
+    // Verificar si alguna fila fue eliminada
+    if (result.affectedRows > 0) {
+      res.json("Se eliminó correctamente");
+    } else {
+      res.json("No se encontró ninguna publicación con ese id");
     }
-}
-const server = new Server();
-server.start();
+  });
+});
