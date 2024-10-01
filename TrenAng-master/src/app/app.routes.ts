@@ -8,5 +8,4 @@ export const routes: Routes = [
     {path: 'publications', component: PublicationsComponent},
     {path: 'home', component: MainPageComponent},
     {path: 'form',component:FormComponent},
-    {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
