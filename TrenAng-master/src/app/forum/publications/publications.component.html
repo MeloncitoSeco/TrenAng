@@ -1,11 +1,32 @@
-<div style="margin-top: 50px;">
-  <div class="card colorChanger">
-    <h1>
-      holosdofsdfsdfsdfsdfsdfsdfsdfsdfsdfghjggg233333344444444rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr4666666666666666888888888888
-    </h1>
+<div style="margin-top: 50px; flex-wrap: wrap">
+  <!-- Comprobamos si hay publicaciones -->
+  <div *ngIf="publicaciones && publicaciones.length > 0; else noPublicaciones">
+    <!-- Iteramos sobre las publicaciones -->
+    <div
+      *ngFor="let publicacion of publicaciones; trackBy: trackByPubId"
+      class="card colorChanger"
+      [ngClass]="{ expanded: expanded }"
+      (click)="expandDiv($event)"
+    >
+      <div>
+        <h1>{{ publicacion.title }}</h1>
+      </div>
+      <div>
+        <img
+          style="width: 40%"
+          [src]="'fotosGuardadas/' + publicacion.photo + '.jpg'"
+        />
+      </div>
+      <div style="width: 60%" class="truncateText">
+        <p>{{ publicacion.text }}</p>
+      </div>
+    </div>
   </div>
-  <div class="card colorChanger">fyhjojghfngh,m.xmñmrtijldfgklm</div>
-  <div class="card colorChanger"></div>
-  <div class="card colorChanger"></div>
-  <div class="card colorChanger"></div>
+
+  <!-- Plantilla que se mostrará si no hay publicaciones -->
+  <ng-template #noPublicaciones>
+    <div class="card colorChanger">
+      <h1>No hay publicaciones</h1>
+    </div>
+  </ng-template>
 </div>

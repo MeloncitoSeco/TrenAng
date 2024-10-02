@@ -1,31 +1,57 @@
 <div>
   <mat-sidenav-container hasBackdrop="false">
-    <mat-sidenav 
-    mode="over" 
-    [opened]="isOpen" 
-    class="inside colorChanger" 
-    
-    [fixedInViewport]="true"
-    [fixedTopGap]="40"
+    <mat-sidenav
+      mode="over"
+      [opened]="isOpen"
+      class="inside colorChanger"
+      [fixedInViewport]="true"
+      [fixedTopGap]="40"
     >
       <div class="space"></div>
-        
-        
-        
-        
-      <nav>
-        <h3><a routerLink="/">Home</a></h3>
-        <h3><a routerLink="/publications">Publicaciones</a></h3>
-        <h3><a routerLink="/form">Nueva publicacion</a></h3>
+
+      <nav class="container-fluid">
+        <div class="row mb-3">
+          <div class="col-1"></div>
+          <div class="col-11">
+            <button
+              type="button"
+              class="btn btn-secondary btn-block"
+              routerLink="/"
+            >
+              Home
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-1"></div>
+          <div class="col-11">
+            <button
+              type="button"
+              class="btn btn-secondary btn-block"
+              routerLink="/publications"
+            >
+              Publicaciones
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-1"></div>
+          <div class="col-11">
+            <button
+              type="button"
+              class="btn btn-secondary btn-block"
+              routerLink="/form"
+            >
+              Nueva publicacion
+            </button>
+          </div>
+        </div>
       </nav>
-      
-      
-      
-      
-      
     </mat-sidenav>
-    <mat-sidenav-content class="backgroundChanger" >
-      <router-outlet class="outside "> </router-outlet>
+    <mat-sidenav-content class="backgroundChanger">
+      <router-outlet class="outside"> </router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

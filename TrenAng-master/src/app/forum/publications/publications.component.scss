@@ -1,20 +1,38 @@
-@import '../../../styles.scss';
+@import "../../../styles.scss";
 .card {
-    word-wrap: break-word;
-    width: fit-content;
-    max-width: 46%;
-    min-width: 190px;
-    height: fit-content;
-    min-height: 254px;
-    border-radius: 30px;
-    background: lightgrey;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
-    padding: 20px;
-    margin-left: 20px;
-    margin-top: 45px;
-    float: left;
-  
-  
-  }
+  word-wrap: break-word;
+  width: fit-content;
+  max-width: 30%;
+  min-width: 390px;
+  height: fit-content;
+  min-height: 254px;
+  border-radius: 30px;
+  background: lightgrey;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+  padding: 20px;
+  margin-left: 20px;
+  margin-top: 45px;
+  float: left;
+  transition: all 0.5s ease;
+}
 
+.card.expanded{
+  width: 300px;
+  height: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+
+.truncateText {
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Limita el texto a 4 líneas */
+  line-clamp: 4; /* Add this line for compatibility */
+  -webkit-box-orient: vertical;
+  overflow: hidden; /* Oculta el texto excedente */
+  text-overflow: ellipsis;
+}
 
