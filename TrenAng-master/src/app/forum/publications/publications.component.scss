@@ -20,10 +20,10 @@
 
 .card.expanded{
   width: 75%;
-  height: 75%;
+  height: fit-content;
   max-width: 75%;
-  max-height: 75%;
-  position: fixed;
+  padding: 50px;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -44,7 +44,7 @@
   -webkit-line-clamp: 100; /* Limita el texto a 100 líneas */
   line-clamp: 100; /* Add this line for compatibility */
   -webkit-box-orient: vertical;
-  overflow: hidden; /* Oculta el texto excedente */
+  //overflow: hidden; /* Oculta el texto excedente */
   text-overflow: ellipsis;
 }
 img {
