@@ -1,7 +1,13 @@
 @defer {
-    <app-publications/>
-  } @placeholder {
-    <p>Future comments</p>
-  } @loading (minimum 2s) {
-    <p>Loading comments...</p>
+    <app-publications (imagesLoaded)="onImagesLoaded()" /> 
+  } @placeholder  {
+    <div class="loader" >
+        <div class="loader-square colorChanger"></div>
+        <div class="loader-square colorChanger"></div>
+        <div class="loader-square colorChanger"></div>
+        <div class="loader-square colorChanger"></div>
+        <div class="loader-square colorChanger"></div>
+        <div class="loader-square colorChanger"></div>
+        <div class="loader-square colorChanger"></div>
+        </div>
   }

@@ -3,24 +3,26 @@
   <div *ngIf="publicaciones && publicaciones.length > 0; else noPublicaciones">
     <!-- Iteramos sobre las publicaciones -->
     <div
-  *ngFor="let publicacion of publicaciones; trackBy: trackByPubId"
-  class="card colorChanger"
-  [ngClass]="{ expanded: expandedPubId === publicacion.pubId }"
-  (click)="expandDiv(publicacion.pubId, $event)"
->
-  <div>
-    <h1>{{ publicacion.title }}</h1>
-  </div>
-  <div>
-    <img
-      style="width: 40%"
-      [src]="'fotosGuardadas/' + publicacion.photo + '.jpg'"
-    />
-  </div>
-  <div style="width: 60%" class="truncateText">
-    <p>{{ publicacion.text }}</p>
-  </div>
-</div>
+      *ngFor="let publicacion of publicaciones; trackBy: trackByPubId"
+      class="card colorChanger"
+      [ngClass]="{ expanded: expandedPubId === publicacion.pubId }"
+      (click)="expandDiv(publicacion.pubId, $event)"
+    >
+      <div>
+        <h1>{{ publicacion.title }}</h1>
+      </div>
+      <div>
+        <img
+          style="width: 40%"
+          [src]="'fotosGuardadas/' + publicacion.photo + '.jpg'"
+          (load)="onImageLoad()"
+          (error)="onImageError()"
+        />
+      </div>
+      <div style="width: 60%" class="truncateText">
+        <p>{{ publicacion.text }}</p>
+      </div>
+    </div>
   </div>
 
   <!-- Plantilla que se mostrará si no hay publicaciones -->
