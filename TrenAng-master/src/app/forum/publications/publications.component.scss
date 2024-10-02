@@ -15,15 +15,19 @@
   margin-top: 45px;
   float: left;
   transition: all 0.5s ease;
+  cursor: pointer;
 }
 
 .card.expanded{
-  width: 300px;
-  height: 300px;
+  width: 75%;
+  height: 75%;
+  max-width: 75%;
+  max-height: 75%;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
   z-index: 999;
 }
 

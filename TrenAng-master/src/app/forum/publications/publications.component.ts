@@ -22,20 +22,20 @@ export class PublicationsComponent {
     return publicacion.pubId;
   }
 
-  expanded: boolean = false;
+  expandedPubId: number | null = null; // Cambiamos a null para inicializar sin expansión
 
-  expandDiv(event: MouseEvent) {
-    event.stopPropagation(); // Evitar que el evento se propague al document
-    this.expanded = true;
+  expandDiv(pubId: number, event: MouseEvent) {
+    event.stopPropagation(); // Evitar que el evento se propague
+    this.expandedPubId = this.expandedPubId === pubId ? null : pubId; // Alternar expansión
   }
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: MouseEvent) {
     const targetElement = event.target as HTMLElement;
+    const isCardClicked = targetElement.closest('.card');
 
-    if (!targetElement.closest('#myDiv')) {
-      // Si haces clic fuera del div, vuelve a su tamaño y posición original
-      this.expanded = false;
+    if (!isCardClicked) {
+      this.expandedPubId = null; // Coloca todas las tarjetas en su tamaño original
     }
   }
 }
