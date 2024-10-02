@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ThemesService } from '../../services/themes/themes.service';
 import { ThemeChangerComponent } from '../theme-changer/theme-changer.component'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-bar',
@@ -14,9 +15,13 @@ import { ThemeChangerComponent } from '../theme-changer/theme-changer.component'
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent {
-  constructor(private sidenavService: SidenavService) { }
+  constructor(private sidenavService: SidenavService, private router: Router){ }
 
   toggleSidenav() {
     this.sidenavService.toggle(); // Llama al método toggle del servicio
+  }
+
+  goLogin(){
+    this.router.navigate(['/login']);
   }
 }
