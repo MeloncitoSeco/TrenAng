@@ -1,59 +1,47 @@
 .side {
-
-    top: -10px;
-    text-align: left;
-    /* Alineación del texto a la izquierda */
-    height: 100%;
-    top: 70px;
-    z-index: 1;
-
+  top: -10px;
+  text-align: left;
+  /* Alineación del texto a la izquierda */
+  height: 100%;
+  top: 70px;
+  z-index: 1;
 }
 
-.inside{
-    display: flex;
+.inside {
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  
-
 }
 
-.space{
-    height: 15px;
-    width: 10px;
+.space {
+  height: 15px;
+  width: 10px;
 }
 
 .insidePre {
-   
-    padding-left: 10px;
-    padding-top: 15px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid #ff0000;
-    
+  padding-left: 10px;
+  padding-top: 15px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #ff0000;
 
-    h1 {
-        font-size: 20px;
-        padding: 2px;
-    }
+  h1 {
+    font-size: 20px;
+    padding: 2px;
+  }
 
-    width: fit-content;
-    height: 70vh;
-    padding-left: 10px;
-    padding-right: 15px;
+  width: fit-content;
+  height: 70vh;
+  padding-left: 10px;
+  padding-right: 15px;
 }
-
 
 .outside {
-    top: 50px;
-    padding-left: 10px;
-    padding-top: 15px;
-    width: 0px;
-    height: 100%;
-    float:left;
+  top: 50px;
+  padding-left: 10px;
+  padding-top: 15px;
+  width: 0px;
+  height: 100%;
+  float: left;
 }
-
-
-
-
-

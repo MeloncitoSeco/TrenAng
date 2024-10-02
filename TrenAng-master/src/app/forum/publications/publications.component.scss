@@ -39,4 +39,8 @@
   overflow: hidden; /* Oculta el texto excedente */
   text-overflow: ellipsis;
 }
-
+.truncateText.expanded {}
+img {
+  max-width: 100%; /* Escala las imágenes para que no excedan el tamaño del contenedor */
+  height: auto; /* Mantiene la relación de aspecto */
+}

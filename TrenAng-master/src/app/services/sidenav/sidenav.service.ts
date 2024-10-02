@@ -5,25 +5,19 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SidenavService {
-  private isOpenSubject = new BehaviorSubject<boolean>(false);
+  private isOpenSubject = new BehaviorSubject<boolean>(false); // Estado inicial
   isOpen$ = this.isOpenSubject.asObservable();
 
   toggle() {
-    if(!this.isOpenSubject.value){
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    }
-    this.isOpenSubject.next(!this.isOpenSubject.value);
-    
+    this.isOpenSubject.next(!this.isOpenSubject.value); // Cambia el estado
     
   }
 
   open() {
-    this.isOpenSubject.next(true);
-    
+    this.isOpenSubject.next(true); // Abre el sidenav
   }
 
   close() {
-    this.isOpenSubject.next(false);
+    this.isOpenSubject.next(false); // Cierra el sidenav
   }
 }
