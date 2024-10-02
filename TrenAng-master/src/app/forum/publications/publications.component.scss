@@ -39,7 +39,14 @@
   overflow: hidden; /* Oculta el texto excedente */
   text-overflow: ellipsis;
 }
-.truncateText.expanded {}
+.truncateText.expanded {
+  display: -webkit-box;
+  -webkit-line-clamp: 100; /* Limita el texto a 100 líneas */
+  line-clamp: 100; /* Add this line for compatibility */
+  -webkit-box-orient: vertical;
+  overflow: hidden; /* Oculta el texto excedente */
+  text-overflow: ellipsis;
+}
 img {
   max-width: 100%; /* Escala las imágenes para que no excedan el tamaño del contenedor */
   height: auto; /* Mantiene la relación de aspecto */

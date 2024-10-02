@@ -43,11 +43,9 @@ export class PublicationsComponent {
   }
 
   expandedPubId: number | null = null; // Cambiamos a null para inicializar sin expansión
+  lastClickedPubId: HTMLElement | null = null;
+  firsTime = true; //TODO Esto es horrible
 
-  expandDiv(pubId: number, event: MouseEvent) {
-    event.stopPropagation();
-    this.expandedPubId = this.expandedPubId === pubId ? null : pubId;
-  }
 
 
   @HostListener('document:click', ['$event'])
@@ -55,8 +53,33 @@ export class PublicationsComponent {
     const targetElement = event.target as HTMLElement;
     const isCardClicked = targetElement.closest('.card');
 
+    // Si se hizo clic fuera de las tarjetas, contraer la tarjeta expandida
     if (!isCardClicked) {
-      this.expandedPubId = null; // Coloca todas las tarjetas en su tamaño original
+      this.expandedPubId = null;
     }
+  }
+
+  // Este método lo llamaremos desdel boton en el html
+  expandDiv(pubId: number, event: MouseEvent) {
+    // Evitamos que el clic propague fuera de la tarjeta
+    event.stopPropagation();
+    const targetElement = event.target as HTMLElement;
+    const cardClicked = targetElement.closest('.card');
+    
+    if ((!this.firsTime) && (this.lastClickedPubId === this.expandedPubId)){
+      this.expandedPubId = null;
+      console.log("if ", this.expandedPubId);
+
+    }else{
+      this.expandedPubId =  pubId;
+      console.log("Else", this.expandedPubId);
+    }
+    this.lastClickedPubId = event.target as HTMLElement;
+    this.firsTime=false;
+    console.log("lastClickedPubId", this.lastClickedPubId);
+    
+    // Alternar entre expandir y contraer la tarjeta seleccionada
+    
+    
   }
 }
