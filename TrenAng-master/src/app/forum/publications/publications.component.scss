@@ -18,17 +18,22 @@
   cursor: pointer;
 }
 
-.card.expanded{
+.card.expanded {
   width: 75%;
-  height: fit-content;
   max-width: 75%;
+   /* Limitar la altura máxima */
   padding: 50px;
-  position: absolute;
-  top: 50%;
+  position: fixed; /* Mantenerla centrada */
   left: 50%;
-  transform: translate(-50%, -50%);
+  top: 50%; /* Centrar verticalmente */
+  transform: translate(-50%, -50%); /* Centrar horizontal y verticalmente */
   transition: all 0.2s ease;
+  padding-top: 80px;
   z-index: 999;
+  overflow-y: auto; /* Permitir desplazamiento */
+  overflow-x: hidden; /* Evitar el desplazamiento horizontal */
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+  border-radius: 30px;
 }
 
 .truncateText {

@@ -22,7 +22,7 @@ export class ThemesService {
     this.setTheme(newTheme);
   }
 
-  getTheme() {
+  getTheme():string {
     return this.currentTheme;
   }
 }
