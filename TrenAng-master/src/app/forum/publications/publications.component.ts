@@ -69,7 +69,10 @@ export class PublicationsComponent {
     clonedCard.style.zIndex = '1000';
     clonedCard.style.width = 'fit-content'; // Asegurarse de ajustar al contenido
     clonedCard.style.maxWidth = '80vw';
-    clonedCard.style.height = '80vh'; // Limitar la altura para permitir scroll si el contenido es muy largo
+    clonedCard.style.maxWidth = '80vw';
+    clonedCard.style.height = 'fit-content';
+    clonedCard.style.minHeight = '40vh';
+    clonedCard.style.maxHeight = '90vh'; 
     clonedCard.style.overflowY = 'auto'; // Permitir scroll vertical
     clonedCard.style.boxShadow = '0px 0px 15px rgba(0, 0, 0, 0.5)'; // Añadir sombra para dar un efecto de "modal"
   

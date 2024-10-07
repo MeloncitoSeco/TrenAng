@@ -1,21 +1,20 @@
 @import "../../../styles.scss";
 .card {
   word-wrap: break-word;
-  width: fit-content;
-  max-width: 30%;
+  width: 30vw;
   min-width: 390px;
-  height: fit-content;
-  min-height: 254px;
+  height: 35vh;
   border-radius: 30px;
   background: lightgrey;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset,
     rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
   padding: 20px;
   margin-left: 20px;
-  margin-top: 45px;
+  margin-top: 20px;
   float: left;
   transition: all 0.5s ease;
   cursor: pointer;
+  text-overflow: ellipsis
 }
 
 .card.expanded {
@@ -37,14 +36,12 @@
 }
 
 .truncateText {
-  display: -webkit-box;
-  -webkit-line-clamp: 4; /* Limita el texto a 4 líneas */
-  line-clamp: 4;
-  -webkit-box-orient: vertical;
+  display: -webkit-box; /* Para utilizar el modelo de caja flexible */
+  -webkit-box-orient: vertical; /* Orientación vertical */
   overflow: hidden; /* Oculta el texto excedente */
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; /* Muestra puntos suspensivos al final */
   font-size: 14px; /* Tamaño de fuente inicial */
-  transition: all 0.3s ease; /* Transición suave */
+  transition: all 0.3s ease; /* Transición suave para los cambios */
 }
 
 .truncateText.expanded {
