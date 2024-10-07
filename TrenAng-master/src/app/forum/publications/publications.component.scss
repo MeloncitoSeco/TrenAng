@@ -39,18 +39,21 @@
 .truncateText {
   display: -webkit-box;
   -webkit-line-clamp: 4; /* Limita el texto a 4 líneas */
-  line-clamp: 4; /* Add this line for compatibility */
+  line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden; /* Oculta el texto excedente */
   text-overflow: ellipsis;
+  font-size: 14px; /* Tamaño de fuente inicial */
+  transition: all 0.3s ease; /* Transición suave */
 }
+
 .truncateText.expanded {
-  display: -webkit-box;
-  -webkit-line-clamp: 100; /* Limita el texto a 100 líneas */
-  line-clamp: 100; /* Add this line for compatibility */
+  -webkit-line-clamp: unset; /* Eliminar límite de líneas al expandir */
+  line-clamp: unset;
   -webkit-box-orient: vertical;
-  //overflow: hidden; /* Oculta el texto excedente */
-  text-overflow: ellipsis;
+  overflow-y: visible; /* Mostrar todo el contenido */
+  text-overflow: unset; /* Eliminar puntos suspensivos */
+  font-size: 18px; /* Aumentar el tamaño del texto al expandir */
 }
 img {
   max-width: 100%; /* Escala las imágenes para que no excedan el tamaño del contenedor */

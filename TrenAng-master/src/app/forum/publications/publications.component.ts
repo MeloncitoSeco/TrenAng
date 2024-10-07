@@ -27,6 +27,67 @@ export class PublicationsComponent {
     { pubId: 16, title: 'Holiwis', text: 'Originalmente impulsados por máquinas de vapor', photo: '4' },
 
   ];
+  expandedPubId: number | null = null; // Para rastrear la tarjeta expandida
+  clonedCard: HTMLElement | null = null; // Almacenaremos la tarjeta clonada
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    const isCardClicked = targetElement.closest('.card');
+    const isExpandedCardClicked = targetElement.closest('.card-clone');
+
+    // Si se hizo clic fuera de las tarjetas o de la tarjeta clonada, eliminar la tarjeta expandida
+    if (!isCardClicked && !isExpandedCardClicked && this.clonedCard) {
+      this.removeClonedCard();
+    }
+  }
+
+  // Este método se ejecuta al hacer clic en una tarjeta
+  expandDiv(pubId: number, event: MouseEvent) {
+    event.stopPropagation(); // Prevenir que el clic se propague fuera
+
+    // Si ya hay una tarjeta expandida, primero la removemos
+    if (this.clonedCard) {
+      this.removeClonedCard();
+    }
+
+    // Crear una copia de la tarjeta original
+    const targetElement = event.currentTarget as HTMLElement;
+    this.createClonedCard(targetElement, pubId);
+  }
+
+  // Método para crear la tarjeta clonada centrada
+  createClonedCard(originalCard: HTMLElement, pubId: number) {
+    const clonedCard = originalCard.cloneNode(true) as HTMLElement;
+    clonedCard.classList.add('card-clone'); // Agregar una clase especial para la tarjeta clonada
+
+    // Aplicar estilo de centrado
+    clonedCard.style.position = 'fixed';
+    clonedCard.style.left = '50%';
+    clonedCard.style.top = '50%';
+    clonedCard.style.transform = 'translate(-50%, -50%)';
+    clonedCard.style.zIndex = '1000';
+    clonedCard.style.width = 'fitContent';
+    clonedCard.style.maxWidth = '80vw';
+    clonedCard.style.height = '80vh'; // Limitar la altura para permitir scroll si el contenido es muy largo
+    clonedCard.style.overflowY = 'auto'; // Permitir scroll vertical
+    clonedCard.style.boxShadow = '0px 0px 15px rgba(0, 0, 0, 0.5)'; // Añadir sombra para dar un efecto de "modal"
+    
+
+    // Insertar la tarjeta clonada en el body
+    document.body.appendChild(clonedCard);
+
+    // Almacenar la referencia de la tarjeta clonada
+    this.clonedCard = clonedCard;
+  }
+
+  // Método para remover la tarjeta clonada
+  removeClonedCard() {
+    if (this.clonedCard) {
+      document.body.removeChild(this.clonedCard);
+      this.clonedCard = null;
+    }
+  }
 
   loadedImagesCount: number = 0;
   totalImagesCount: number = this.publicaciones.length; // TODO En el futuro una pub va a poder tener mas de una foto
@@ -52,44 +113,13 @@ export class PublicationsComponent {
     return publicacion.pubId;
   }
 
-  expandedPubId: number | null = null; // Cambiamos a null para inicializar sin expansión
   lastClickedPubId: HTMLElement | null = null;
   firsTime = true; //TODO Esto es horrible
 
 
 
-  @HostListener('document:click', ['$event'])
-  handleClickOutside(event: MouseEvent) {
-    const targetElement = event.target as HTMLElement;
-    const isCardClicked = targetElement.closest('.card');
-
-    // Si se hizo clic fuera de las tarjetas, contraer la tarjeta expandida
-    if (!isCardClicked) {
-      this.expandedPubId = null;
-    }
-  }
+ 
 
   // Este método lo llamaremos desdel boton en el html
-  expandDiv(pubId: number, event: MouseEvent) {
-    // Evitamos que el clic propague fuera de la tarjeta
-    event.stopPropagation();
-    const targetElement = event.target as HTMLElement;
-    const cardClicked = targetElement.closest('.card');
-    
-    if ((!this.firsTime) && (this.lastClickedPubId === this.expandedPubId)){
-      this.expandedPubId = null;
-      console.log("if ", this.expandedPubId);
-
-    }else{
-      this.expandedPubId =  pubId;
-      console.log("Else", this.expandedPubId);
-    }
-    this.lastClickedPubId = event.target as HTMLElement;
-    this.firsTime=false;
-    console.log("lastClickedPubId", this.lastClickedPubId);
-    
-    // Alternar entre expandir y contraer la tarjeta seleccionada
-    
-    
-  }
+  
 }

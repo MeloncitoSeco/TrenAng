@@ -19,7 +19,7 @@
           (error)="onImageError()"
         />
       </div>
-      <div style="width: 60%" class="truncateText"  [ngClass]="{ expanded: expandedPubId === publicacion.pubId }">
+      <div class="truncateText" [ngClass]="{ expanded: expandedPubId === publicacion.pubId }">
         <p>{{ publicacion.text }}</p>
       </div>
     </div>
