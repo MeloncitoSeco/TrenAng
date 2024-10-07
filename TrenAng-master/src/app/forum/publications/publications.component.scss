@@ -23,7 +23,7 @@
   max-width: 75%;
    /* Limitar la altura máxima */
   padding: 50px;
-  position: fixed; /* Mantenerla centrada */
+  position: relative; /* Mantenerla centrada */
   left: 50%;
   top: 50%; /* Centrar verticalmente */
   transform: translate(-50%, -50%); /* Centrar horizontal y verticalmente */
