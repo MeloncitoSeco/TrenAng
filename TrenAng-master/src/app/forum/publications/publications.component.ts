@@ -60,23 +60,33 @@ export class PublicationsComponent {
   createClonedCard(originalCard: HTMLElement, pubId: number) {
     const clonedCard = originalCard.cloneNode(true) as HTMLElement;
     clonedCard.classList.add('card-clone'); // Agregar una clase especial para la tarjeta clonada
-
+  
     // Aplicar estilo de centrado
     clonedCard.style.position = 'fixed';
     clonedCard.style.left = '50%';
     clonedCard.style.top = '50%';
     clonedCard.style.transform = 'translate(-50%, -50%)';
     clonedCard.style.zIndex = '1000';
-    clonedCard.style.width = 'fitContent';
+    clonedCard.style.width = 'fit-content'; // Asegurarse de ajustar al contenido
     clonedCard.style.maxWidth = '80vw';
     clonedCard.style.height = '80vh'; // Limitar la altura para permitir scroll si el contenido es muy largo
     clonedCard.style.overflowY = 'auto'; // Permitir scroll vertical
     clonedCard.style.boxShadow = '0px 0px 15px rgba(0, 0, 0, 0.5)'; // Añadir sombra para dar un efecto de "modal"
-    
-
+  
+    // Quitar la restricción de 4 líneas en el texto truncado
+    const truncatedText = clonedCard.querySelector('.truncateText') as HTMLElement;
+    if (truncatedText) {
+      truncatedText.style.display = '-webkit-box'; // Mantener el comportamiento de caja flexible
+      truncatedText.style.webkitLineClamp = 'unset'; // Eliminar la restricción de líneas
+      truncatedText.style.webkitLineClamp = 'unset';
+      truncatedText.style.overflow = 'visible'; // Asegurarse de que se muestre todo el contenido
+      truncatedText.style.textOverflow = 'unset'; // Quitar los puntos suspensivos
+      truncatedText.style.maxHeight = 'none'; // Permitir que el texto crezca sin restricciones de altura
+    }
+  
     // Insertar la tarjeta clonada en el body
     document.body.appendChild(clonedCard);
-
+  
     // Almacenar la referencia de la tarjeta clonada
     this.clonedCard = clonedCard;
   }
