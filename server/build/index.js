@@ -47,7 +47,7 @@ app.get("/api/publications", (req, res) => {
   });
 });
 
-app.get("/api/publications/:pubId", (req, res) => {
+app.get("/api/publicationsId/:pubId", (req, res) => {
   const { pubId } = req.params;
   const query = `SELECT * FROM Publicacion WHERE pubId = ${pubId}`;
   console.log(query);
@@ -98,7 +98,7 @@ app.put("/api/publications/actualizar/:pubId", (req, res) => {
 // DELETE
 app.delete("/api/publications/delete/:pubId", (req, res) => {
   const { pubId } = req.params;
-  const query = "DELETE FROM Publicacion WHERE pubId = ?"; // Ajusta el nombre de la columna si es necesario
+  const query = "DELETE FROM Publicacion WHERE pubId = ?";
   console.log(query);
   // Usa el pubId como parámetro para evitar SQL Injection
   conection.query(query, [pubId], (err, result) => {

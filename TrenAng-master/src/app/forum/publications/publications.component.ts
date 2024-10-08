@@ -27,8 +27,8 @@ export class PublicationsComponent {
     { pubId: 16, title: 'Holiwis', text: 'Originalmente impulsados por máquinas de vapor', photo: '4' },
 
   ];
-  expandedPubId: number | null = null; // Para rastrear la tarjeta expandida
-  clonedCard: HTMLElement | null = null; // Almacenaremos la tarjeta clonada
+  expandedPubId: number | null = null;
+  clonedCard: HTMLElement | null = null;
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: MouseEvent) {
@@ -36,65 +36,62 @@ export class PublicationsComponent {
     const isCardClicked = targetElement.closest('.card');
     const isExpandedCardClicked = targetElement.closest('.card-clone');
 
-    // Si se hizo clic fuera de las tarjetas o de la tarjeta clonada, eliminar la tarjeta expandida
+    
     if (!isCardClicked && !isExpandedCardClicked && this.clonedCard) {
       this.removeClonedCard();
     }
   }
 
-  // Este método se ejecuta al hacer clic en una tarjeta
-  expandDiv(pubId: number, event: MouseEvent) {
-    event.stopPropagation(); // Prevenir que el clic se propague fuera
 
-    // Si ya hay una tarjeta expandida, primero la removemos
+  expandDiv(pubId: number, event: MouseEvent) {
+    event.stopPropagation(); 
+
     if (this.clonedCard) {
       this.removeClonedCard();
     }
 
-    // Crear una copia de la tarjeta original
+
     const targetElement = event.currentTarget as HTMLElement;
     this.createClonedCard(targetElement, pubId);
   }
 
-  // Método para crear la tarjeta clonada centrada
+  
   createClonedCard(originalCard: HTMLElement, pubId: number) {
     const clonedCard = originalCard.cloneNode(true) as HTMLElement;
-    clonedCard.classList.add('card-clone'); // Agregar una clase especial para la tarjeta clonada
-  
-    // Aplicar estilo de centrado
+    clonedCard.classList.add('card-clone'); 
+
     clonedCard.style.position = 'fixed';
     clonedCard.style.left = '50%';
     clonedCard.style.top = '50%';
     clonedCard.style.transform = 'translate(-50%, -50%)';
     clonedCard.style.zIndex = '1000';
-    clonedCard.style.width = 'fit-content'; // Asegurarse de ajustar al contenido
+    clonedCard.style.width = 'fit-content'; 
     clonedCard.style.maxWidth = '80vw';
     clonedCard.style.maxWidth = '80vw';
     clonedCard.style.height = 'fit-content';
     clonedCard.style.minHeight = '40vh';
     clonedCard.style.maxHeight = '90vh'; 
-    clonedCard.style.overflowY = 'auto'; // Permitir scroll vertical
-    clonedCard.style.boxShadow = '0px 0px 15px rgba(0, 0, 0, 0.5)'; // Añadir sombra para dar un efecto de "modal"
+    clonedCard.style.overflowY = 'auto';
+    clonedCard.style.boxShadow = '0px 0px 15px rgba(0, 0, 0, 0.5)';
   
-    // Quitar la restricción de 4 líneas en el texto truncado
+  
     const truncatedText = clonedCard.querySelector('.truncateText') as HTMLElement;
     if (truncatedText) {
-      truncatedText.style.display = '-webkit-box'; // Mantener el comportamiento de caja flexible
-      truncatedText.style.webkitLineClamp = 'unset'; // Eliminar la restricción de líneas
+      truncatedText.style.display = '-webkit-box';
       truncatedText.style.webkitLineClamp = 'unset';
-      truncatedText.style.overflow = 'visible'; // Asegurarse de que se muestre todo el contenido
-      truncatedText.style.textOverflow = 'unset'; // Quitar los puntos suspensivos
-      truncatedText.style.maxHeight = 'none'; // Permitir que el texto crezca sin restricciones de altura
+      truncatedText.style.webkitLineClamp = 'unset';
+      truncatedText.style.overflow = 'visible';
+      truncatedText.style.textOverflow = 'unset'; 
+      truncatedText.style.maxHeight = 'none';
     }
   
-    // Insertar la tarjeta clonada en el body
+
     document.body.appendChild(clonedCard);
   
-    // Almacenar la referencia de la tarjeta clonada
+
     this.clonedCard = clonedCard;
   }
 
-  // Método para remover la tarjeta clonada
   removeClonedCard() {
     if (this.clonedCard) {
       document.body.removeChild(this.clonedCard);
@@ -110,12 +107,11 @@ export class PublicationsComponent {
   onImageLoad() {
     this.loadedImagesCount++;
     if (this.loadedImagesCount === this.totalImagesCount) {
-      this.imagesLoaded.emit(); // Emitimos el evento cuando todas las imágenes se han cargado
+      this.imagesLoaded.emit();
     }
   }
 
   onImageError() {
-    // También contamos la imagen si falla
     this.loadedImagesCount++;
     if (this.loadedImagesCount === this.totalImagesCount) {
       this.imagesLoaded.emit();
@@ -128,11 +124,5 @@ export class PublicationsComponent {
 
   lastClickedPubId: HTMLElement | null = null;
   firsTime = true; //TODO Esto es horrible
-
-
-
- 
-
-  // Este método lo llamaremos desdel boton en el html
   
 }
