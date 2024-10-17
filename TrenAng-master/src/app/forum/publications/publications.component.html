@@ -1,9 +1,9 @@
 <div style="padding-top: 80px; flex-wrap: wrap ;min-height: 100vh">
   <!-- Comprobamos si hay publicaciones -->
-  <div *ngIf="publicaciones && publicaciones.length > 0; else noPublicaciones">
+  <div *ngIf="publications && publications.length > 0; else noPublicaciones">
     <!-- Iteramos sobre las publicaciones -->
     <div
-      *ngFor="let publicacion of publicaciones; trackBy: trackByPubId"
+      *ngFor="let publicacion of publications; trackBy: trackByPubId"
       class="card colorChanger"
       [ngClass]="{ expanded: expandedPubId === publicacion.pubId }"
       (click)="expandDiv(publicacion.pubId, $event)"

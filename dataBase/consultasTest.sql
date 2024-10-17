@@ -1,3 +1,3 @@
 use fotoTren;
 SELECT * FROM Publicacion;
-SELECT * FROM Publicacion WHERE pub_id =1;
+SELECT * FROM Publicacion WHERE pubId =1;

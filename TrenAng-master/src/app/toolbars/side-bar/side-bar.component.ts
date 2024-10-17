@@ -37,7 +37,7 @@ export class SideBarComponent implements OnInit {
     if (this.isOpen && !targetElement.closest('.inside') && !targetElement.closest('.toggle-button')) {
       this.sidenavService.close();
 
-    }else if (this.isOpen && targetElement.closest('.btn')) {
+    } else if (this.isOpen && targetElement.closest('.btn')) {
       this.sidenavService.close();
     }
   }
