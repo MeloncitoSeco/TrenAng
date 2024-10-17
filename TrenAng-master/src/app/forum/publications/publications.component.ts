@@ -1,15 +1,15 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { NgIf, NgFor, NgClass } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule
+import { HttpClientModule } from '@angular/common/http'; 
 import { ServerService } from '../../services/api/server.service';
 
 @Component({
   selector: 'app-publications',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, HttpClientModule], // Añadir HttpClientModule aquí
+  imports: [NgIf, NgFor, NgClass, HttpClientModule],
   templateUrl: './publications.component.html',
   styleUrl: './publications.component.scss',
-  providers: [ServerService], // Proveedor del servicio ServerService
+  providers: [ServerService],
 })
 export class PublicationsComponent implements OnInit {
   publications: any[] = [];
@@ -55,7 +55,7 @@ export class PublicationsComponent implements OnInit {
 
   createClonedCard(originalCard: HTMLElement, pubId: number) {
     const clonedCard = originalCard.cloneNode(true) as HTMLElement;
-    clonedCard.classList.add('card-clone');
+    clonedCard.classList.add('card-clone'); //Esto es para el card se expanda
 
     clonedCard.style.position = 'fixed';
     clonedCard.style.left = '50%';
