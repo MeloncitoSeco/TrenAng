@@ -66,17 +66,17 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `fotoTren`.`Publicacion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `fotoTren`.`Publicacion` (
-  `pubId` INT NOT NULL,
+  `pubId` INT NOT NULL AUTO_INCREMENT,  -- Campo autoincremental
   `email` VARCHAR(255) NOT NULL,
   `trenId` INT NOT NULL,
   `titulo` VARCHAR(120) NOT NULL,
   `posicion` VARCHAR(45) NOT NULL,
   `comAuto` VARCHAR(45) NOT NULL,
-  `fechaCrea` timestamp default current_timestamp,
+  `fechaCrea` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `texto` VARCHAR(2000),
-  PRIMARY KEY (`pubId`),
+  PRIMARY KEY (`pubId`),  -- Llave primaria sobre el campo autoincremental
   INDEX `pub-usu_idx` (`email` ASC),
-  INDEX `pub-tren_idx` (`trenId` ASC) ,
+  INDEX `pub-tren_idx` (`trenId` ASC),
   CONSTRAINT `pub-tren`
     FOREIGN KEY (`trenId`)
     REFERENCES `fotoTren`.`Tren` (`trenId`)
@@ -86,8 +86,8 @@ CREATE TABLE IF NOT EXISTS `fotoTren`.`Publicacion` (
     FOREIGN KEY (`email`)
     REFERENCES `fotoTren`.`Usuario` (`email`)
     ON DELETE NO ACTION
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
+    ON UPDATE CASCADE
+) ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -98,8 +98,6 @@ CREATE TABLE IF NOT EXISTS `fotoTren`.`Imagen` (
   `imgId` INT NOT NULL AUTO_INCREMENT,
   `fecha` DATETIME NOT NULL,
   `pubId` INT NOT NULL,
-  `sesion` VARCHAR(255) NULL DEFAULT NULL,
-  `num` INT NULL DEFAULT NULL,
   PRIMARY KEY (`imgId`),
   INDEX `img-pub_idx` (`pubId` ASC),
   CONSTRAINT `img-pub`
@@ -108,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `fotoTren`.`Imagen` (
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -141,6 +139,7 @@ START TRANSACTION;
 USE `fotoTren`;
 INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (1, 'Civia', 8, 2003);
 INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (2, 'IRYO', 4, 2020);
+INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (3, 'Gorg', 3, 2024);
 
 COMMIT;
 
@@ -151,6 +150,7 @@ COMMIT;
 START TRANSACTION;
 USE `fotoTren`;
 INSERT INTO `fotoTren`.`usuario` (`nombre`, `email`, `contra`) VALUES ('Santi', 'santiago@gmail.com', '1234');
+INSERT INTO `fotoTren`.`usuario` (`nombre`, `email`, `contra`) VALUES ('Miriam', 'miri@gmail.com', '1234');
 
 COMMIT;
 
@@ -160,8 +160,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`Publicacion` (`pubId`, `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES (1, 'santiago@gmail.com', 1, 'Primer Civia', 'Quieto', 'Andalucía');
-INSERT INTO `fotoTren`.`Publicacion` (`pubId`, `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES (2, 'santiago@gmail.com', 2, 'Iryo', 'Quieto', 'Navarra');
+INSERT INTO `fotoTren`.`Publicacion` ( `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES ( 'santiago@gmail.com', 1, 'Primer Civia', 'Quieto', 'Andalucía');
+INSERT INTO `fotoTren`.`Publicacion` ( `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES ( 'santiago@gmail.com', 2, 'Iryo', 'Quieto', 'Navarra');
+INSERT INTO `fotoTren`.`Publicacion` ( `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES ( 'miri@gmail.com', 3, 'Iryo', 'Moviendo', 'Catalunia');
+INSERT INTO `fotoTren`.`Publicacion` ( `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES ( 'santiago@gmail.com', 2, 'otro', 'Moviendo', 'Catalunia');
 COMMIT;
 
 
@@ -170,9 +172,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (10, '2013-03-20 19:56:00', 1, 'rth65ufgh', 1);
-INSERT INTO `fotoTren`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (11, '2022-04-20 19:56:00', 2, 'rth65ufgh', 1);
-INSERT INTO `fotoTren`.`imagen` (`imgId`, `fecha`, `pubId`, `sesion`, `num`) VALUES (12, '2022-04-20 19:56:00', 2, 'rth65ufgh', 1);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 10:30:00', 1);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 11:00:00', 1);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 12:15:00', 2);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 13:20:00', 2);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 14:25:00', 3);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 15:30:00', 3);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 16:45:00', 4);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 17:50:00', 4);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 18:55:00', 1);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 19:10:00', 2);
 
 
 COMMIT;
