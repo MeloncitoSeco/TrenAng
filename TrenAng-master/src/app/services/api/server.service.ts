@@ -37,4 +37,8 @@ export class ServerService {
   deletePublication(pubId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${pubId}`);
   }
+  getTrenTypes(): Observable<any>{
+    return this.http.get('http://localhost:3000/api/trains/types');
+
+  }
 }

@@ -3,25 +3,25 @@
 <mat-stepper
   class="example-stepper colorChanger"
   [orientation]="(stepperOrientation | async)!">
-  <mat-step [stepControl]="firstFormGroup" label="Trenes" >
+  <mat-step [stepControl]="firstFormGroup" label="Publicacion" >
     <form [formGroup]="firstFormGroup" >
       <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        <mat-label>Titulo</mat-label>
+        <input matInput placeholder="Titulo publicacion" formControlName="firstCtrl" required>
       </mat-form-field>
       <mat-form-field class="Field">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        <mat-label>Descripcion</mat-label>
+        <input matInput placeholder="Texto" formControlName="firstCtrl" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Fill out your address" state="chat">
+  <mat-step [stepControl]="secondFormGroup" label="Tren" state="chat">
     <form [formGroup]="secondFormGroup">
       <mat-form-field>
-        <mat-label>Address</mat-label>
+        <mat-label>Tren</mat-label>
         <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
       </mat-form-field>
       <div>
