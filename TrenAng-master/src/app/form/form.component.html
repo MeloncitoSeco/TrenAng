@@ -21,8 +21,13 @@
   <mat-step [stepControl]="secondFormGroup" label="Tren" state="chat">
     <form [formGroup]="secondFormGroup">
       <mat-form-field>
-        <mat-label>Tren</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+        <mat-label>Selecciona un tren</mat-label>
+        <mat-select formControlName="secondCtrl" required>
+          <!-- Itera sobre listaTipoTrenes para generar las opciones -->
+          <mat-option *ngFor="let tren of listaTipoTrenes" [value]="tren.tipoTren">
+            {{ tren.nombre }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>

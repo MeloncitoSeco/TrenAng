@@ -7,44 +7,52 @@ import {map} from 'rxjs/operators';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, CommonModule} from '@angular/common';
 import { ServerService } from '../services/api/server.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { TipoTren } from '../clases/tipoTren/tipo-tren';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-form',
   standalone: true,
   imports: [
     MatStepperModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     AsyncPipe,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule,
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
+
+
 export class FormComponent implements OnInit {
   trenes : any[] = [];
-
-  constructor(private serverService: ServerService) {
+ listaTipoTrenes : TipoTren[] = [];
+  constructor(  http :HttpClientModule, private serverService: ServerService) {
     const breakpointObserver = inject(BreakpointObserver);
+
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
-      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+      .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
   }
 
   ngOnInit(): void {
-    this.serverService.getPublications().subscribe(
-      (data) => {
-        this.trenes = data;
-        console.log(this.trenes);
+    this.serverService.getTrenTypes().subscribe(
+      (data: TipoTren[]) => {
+        // Mapea los datos a instancias de TipoTren
+        this.listaTipoTrenes = data.map(item => new TipoTren(item.tipoTren, item.nombre));
+        console.log(this.listaTipoTrenes);
       },
       (error) => {
-        console.error('Error al obtener publicaciones', error);
+        console.error('Error al obtener los tipos de trenes', error);
       }
     );
   }

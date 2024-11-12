@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { TipoTren } from '../../clases/tipoTren/tipo-tren';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,7 @@ export class ServerService {
   deletePublication(pubId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${pubId}`);
   }
-  getTrenTypes(): Observable<any>{
-    return this.http.get('http://localhost:3000/api/trains/types');
-
+  getTrenTypes(): Observable<TipoTren[]> {
+    return this.http.get<TipoTren[]>('http://localhost:3000/api/trains/types');
   }
 }
