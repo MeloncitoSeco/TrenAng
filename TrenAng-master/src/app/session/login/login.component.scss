@@ -26,7 +26,7 @@
 
 .card-sideLogin::before {
   position: absolute;
-  content: "Log in";
+  content: "Entrar";
   left: -70px;
   top: 0;
   width: 100px;
@@ -37,7 +37,7 @@
 
 .card-sideLogin::after {
   position: absolute;
-  content: "Sign up";
+  content: "Crear";
   left: 70px;
   top: 0;
   width: 100px;
@@ -210,7 +210,7 @@
 
 ::ng-deep body.dark-theme {
   .wrapperLogin {
-    --input-focus: #2d8cf0;
+    --input-focus: #757575;
     --font-color: #fefefe;
     --font-color-sub: #7e7e7e;
     --bg-color: #111;

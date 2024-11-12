@@ -35,6 +35,85 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+
+
+
+app.get("/api/trains/types", (req, res) => {
+  const query = "SELECT * FROM tipoTren";
+  conection.query(query, (err, result) => {
+    if (err) return console.log(err.message);
+    res.json(result);
+  });
+});
+
+app.get("/api/users", (req, res) => {
+  const query = "SELECT * FROM usuario";
+  conection.query(query, (err, result) => {
+    if (err) return console.log(err.message);
+    res.json(result);
+  });
+});
+
+
+app.post("/api/users/create", (req, res) => {
+  const usuario = {
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  };
+  
+  const idFinder = "SELECT email FROM usuario WHERE email = ?";
+  
+  // Check if user already exists
+  conection.query(idFinder, [usuario.email], (err, result) => {
+    if (err) {
+      console.log(err.message);
+      return res.status(500).json("Error while checking for existing user");
+    }
+
+    if (result.length > 0) {
+      res.json("El usuario ya existe");
+    } else {
+      const insertQuery = "INSERT INTO usuario SET ?";
+      conection.query(insertQuery, usuario, (err, result) => {
+        if (err) {
+          console.log(err.message);
+          return res.status(500).json("Error while inserting user");
+        }
+        res.json("Se insertó correctamente");
+      });
+    }
+  });
+});
+
+
+
+app.post("/api/users/login", (req, res) => {
+  const usuario = {
+    email: req.body.email,
+    contra: req.body.contra,
+  };
+
+  const checker = `SELECT contra FROM usuario WHERE email = ?`;
+  
+  // Check if user exists and password matches
+  conection.query(checker, [usuario.email], (err, result) => {
+    if (err) {
+      console.log(err.message);
+      return res.status(500).json("Error while checking user credentials");
+    }
+    
+    if (result.length > 0 && result[0].contra === usuario.contra) {
+      // Password matches
+      res.json("OK");
+    } else {
+      // Password does not match or user not found
+      res.json("NO");
+    }
+  });
+});
+
+
 app.get("/api/publications", (req, res) => {
   const query = "select * from imagen as img join publicacion as pub on img.pubId=pub.pubId group by pub.pubId  ;";
   conection.query(query, (err, result) => {
