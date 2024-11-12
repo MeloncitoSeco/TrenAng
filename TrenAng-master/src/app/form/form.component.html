@@ -1,13 +1,14 @@
 
 
 <mat-stepper
-  class="example-stepper colorChanger"
+  class="colorChangerForm "
+  style="margin-top: 70px;"
   [orientation]="(stepperOrientation | async)!">
   <mat-step [stepControl]="firstFormGroup" label="Publicacion" >
     <form [formGroup]="firstFormGroup" >
-      <mat-form-field>
-        <mat-label>Titulo</mat-label>
-        <input matInput placeholder="Titulo publicacion" formControlName="firstCtrl" required>
+      <mat-form-field >
+        <mat-label class="colorChangerTestNoBg">Titulo</mat-label>
+        <input matInput placeholder="Titulo publicacion" formControlName="firstCtrl" required >
       </mat-form-field>
       <mat-form-field class="Field">
         <mat-label>Descripcion</mat-label>
@@ -19,23 +20,27 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup" label="Tren" state="chat">
-    <form [formGroup]="secondFormGroup">
-      <mat-form-field>
-        <mat-label>Selecciona un tren</mat-label>
-        <mat-select formControlName="secondCtrl" required>
-          <!-- Itera sobre listaTipoTrenes para generar las opciones -->
-          <mat-option *ngFor="let tren of listaTipoTrenes" [value]="tren.tipoTren">
-            {{ tren.nombre }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="thirdFormGroup" label="Fill out your phone number">
+  <form [formGroup]="secondFormGroup">
+    <mat-form-field>
+      <mat-label>Selecciona un tren</mat-label>
+      <mat-select formControlName="secondCtrl" required>
+        <!-- Itera sobre listaTipoTrenes para generar las opciones -->
+        <mat-option *ngFor="let tren of listaTipoTrenes" [value]="tren.tipoTren">
+          {{ tren.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Modelo</mat-label>
+      <input matInput placeholder="Modelo especifico" formControlName="secondCtrl" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Anterior</button>
+      <button mat-button matStepperNext>Siguiente</button>
+    </div>
+  </form>
+</mat-step>
+  <mat-step [stepControl]="thirdFormGroup" label="Ubicacion">
     <form [formGroup]="thirdFormGroup">
       <mat-form-field>
         <mat-label>Phone number</mat-label>

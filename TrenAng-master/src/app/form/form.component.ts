@@ -49,7 +49,6 @@ export class FormComponent implements OnInit {
       (data: TipoTren[]) => {
         // Mapea los datos a instancias de TipoTren
         this.listaTipoTrenes = data.map(item => new TipoTren(item.tipoTren, item.nombre));
-        console.log(this.listaTipoTrenes);
       },
       (error) => {
         console.error('Error al obtener los tipos de trenes', error);
