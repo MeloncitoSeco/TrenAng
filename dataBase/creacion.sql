@@ -25,7 +25,7 @@ USE `fotoTren` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `fotoTren`.`tipoTren` (
   `tipoTren` INT NOT NULL,
-  `nombre` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`tipoTren`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = armscii8;
@@ -54,9 +54,9 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `fotoTren`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `fotoTren`.`usuario` (
-  `nombre` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
-  `contra` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`email`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -119,15 +119,15 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (1, 'Ave');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (2, 'Alvia');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (3, 'Avant');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (4, 'IRYO');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (5, 'OUIGO');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (6, 'LD');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (7, 'MD');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (8, 'Cercanias/Rodalies');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `nombre`) VALUES (9, 'AM');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (1, 'Ave');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (2, 'Alvia');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (3, 'Avant');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (4, 'IRYO');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (5, 'OUIGO');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (6, 'LD');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (7, 'MD');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (8, 'Cercanias/Rodalies');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (9, 'AM');
 
 COMMIT;
 
@@ -149,8 +149,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`usuario` (`nombre`, `email`, `contra`) VALUES ('Santi', 'santiago@gmail.com', '1234');
-INSERT INTO `fotoTren`.`usuario` (`nombre`, `email`, `contra`) VALUES ('Miriam', 'miri@gmail.com', '1234');
+INSERT INTO `fotoTren`.`usuario` (`name`, `email`, `password`) VALUES ('Santi', 'santiago@gmail.com', '1234');
+INSERT INTO `fotoTren`.`usuario` (`name`, `email`, `password`) VALUES ('Miriam', 'miri@gmail.com', '1234');
 
 COMMIT;
 

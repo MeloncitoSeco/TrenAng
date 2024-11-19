@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TipoTren } from '../../clases/tipoTren/tipo-tren';
+import { Usuario } from '../../clases/usuario/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +10,15 @@ import { TipoTren } from '../../clases/tipoTren/tipo-tren';
 export class ServerService {
 
   private apiUrl = 'http://localhost:3000/api/publications'; 
-
   constructor(private http: HttpClient) { }
 
-  // Obtener todas las publicaciones
+  // Obtener todas las publicaciones (GET)
   getPublications(): Observable<any> {
     console.log(this.apiUrl);
     return this.http.get(this.apiUrl);
   }
 
-  // Obtener una publicación por ID
+  // Obtener una publicación por ID (GET)
   getPublicationById(pubId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${pubId}`);
   }
@@ -38,7 +38,19 @@ export class ServerService {
   deletePublication(pubId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${pubId}`);
   }
+
+  // Obtener los tipos de tren (GET)
   getTrenTypes(): Observable<TipoTren[]> {
     return this.http.get<TipoTren[]>('http://localhost:3000/api/trains/types');
   }
+  postIniciarSesion(datosUsuario: { email: string, password: string }): Observable<any> {
+    return this.http.post('http://localhost:3000/api/users/login', datosUsuario);
+  }
+  
+  postCrearCuenta(datosUsuario: Usuario): Observable<any> {
+    return this.http.post('http://localhost:3000/api/users/create', datosUsuario);
+  }
+  
+
+
 }

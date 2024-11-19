@@ -1,6 +1,10 @@
 const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
+const bcrypt = require('bcrypt');
+const { log } = require("console");
+const saltRounds = 10; // Define the cost factor for hashing
+
 
 const app = express();
 
@@ -54,16 +58,15 @@ app.get("/api/users", (req, res) => {
   });
 });
 
-
 app.post("/api/users/create", (req, res) => {
   const usuario = {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
   };
-  
+
   const idFinder = "SELECT email FROM usuario WHERE email = ?";
-  
+
   // Check if user already exists
   conection.query(idFinder, [usuario.email], (err, result) => {
     if (err) {
@@ -72,47 +75,87 @@ app.post("/api/users/create", (req, res) => {
     }
 
     if (result.length > 0) {
-      res.json("El usuario ya existe");
+      res.status(500).json("El usuario ya existe");
     } else {
-      const insertQuery = "INSERT INTO usuario SET ?";
-      conection.query(insertQuery, usuario, (err, result) => {
+      // Hash the password
+      bcrypt.hash(usuario.password, saltRounds, (err, hashedPassword) => {
         if (err) {
           console.log(err.message);
-          return res.status(500).json("Error while inserting user");
+          return res.status(500).json("Error");
         }
-        res.json("Se insertó correctamente");
+
+        // Replace plain password with hashed password
+        usuario.password = hashedPassword;
+
+        const insertQuery = "INSERT INTO usuario SET ?";
+        conection.query(insertQuery, usuario, (err, result) => {
+          if (err) {
+            console.log(err.message);
+            return res.status(500).json("Error");
+          }
+          res.json("Se insertó correctamente");
+        });
       });
     }
   });
 });
 
-
-
 app.post("/api/users/login", (req, res) => {
   const usuario = {
     email: req.body.email,
-    contra: req.body.contra,
+    contra: req.body.password, // Cambiar 'contra' a 'password'
   };
 
-  const checker = `SELECT contra FROM usuario WHERE email = ?`;
-  
-  // Check if user exists and password matches
+  // Consulta para verificar la contraseña del usuario
+  const checker = `SELECT password FROM usuario WHERE email = ?`;
+
+  // Verificar si el usuario existe y validar la contraseña
   conection.query(checker, [usuario.email], (err, result) => {
     if (err) {
       console.log(err.message);
-      return res.status(500).json("Error while checking user credentials");
+      return res.status(500).json("Error en la base de datos");
     }
-    
-    if (result.length > 0 && result[0].contra === usuario.contra) {
-      // Password matches
-      res.json("OK");
+
+    if (result.length > 0) {
+      const hashedPassword = result[0].password;
+
+      // Comparar la contraseña proporcionada con la almacenada
+      bcrypt.compare(usuario.contra, hashedPassword, (err, isMatch) => {
+        if (err) {
+          console.log(err.message);
+          return res.status(500).json("Error en la comparación de contraseñas");
+        }
+
+        if (isMatch) {
+          // La contraseña coincide, obtener el nombre del usuario
+          const query = `SELECT name FROM usuario WHERE email = ?`;
+          conection.query(query, [usuario.email], (err, result) => {
+            if (err) {
+              console.log(err.message);
+              return res.status(500).json("Error al obtener el nombre del usuario");
+            }
+
+            if (result.length > 0) {
+              // Retornar el nombre del usuario al cliente
+              const name = result[0].name;
+              res.json({ name });
+            } else {
+              // Si no se encuentra el nombre, retornar error
+              res.status(404).json("No se encontró el nombre del usuario");
+            }
+          });
+          
+        } else {
+          // La contraseña no coincide
+          res.status(401).json("Contraseña incorrecta");
+        }
+      });
     } else {
-      // Password does not match or user not found
-      res.json("NO");
+      // El usuario no fue encontrado
+      res.status(404).json("Usuario no encontrado");
     }
   });
 });
-
 
 app.get("/api/publications", (req, res) => {
   const query = "select * from imagen as img join publicacion as pub on img.pubId=pub.pubId group by pub.pubId  ;";
