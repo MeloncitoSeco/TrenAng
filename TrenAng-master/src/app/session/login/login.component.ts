@@ -53,14 +53,12 @@ export class LoginComponent implements OnInit {
   
       this.serverService.postIniciarSesion(datosUsuario).subscribe(
         (data) => {
-          this.respuesta = data;
-          console.log('Inicio de sesión exitoso:', this.respuesta);
+          console.log('Inicio de sesión exitoso:', data);
           sessionStorage.setItem('Cuenta', 'true');
-          sessionStorage.setItem('usuarioNombre', this.respuesta.toString());  // Almacenar el nombre del usuario
+          sessionStorage.setItem('usuarioNombre', data.name); // Almacenar el nombre del usuario
           console.log('Nombre del usuario:', sessionStorage.getItem('usuarioNombre'));
         },
         (error) => {
-          // Manejo seguro del error
           this.loginError = 'Error al iniciar sesión: ' + (error?.error || error?.message || 'Error desconocido');
           console.error('Error al iniciar sesión:', error);
         }
@@ -78,6 +76,8 @@ export class LoginComponent implements OnInit {
           this.respuesta = data;
           console.log('Cuenta creada exitosamente:', this.respuesta);
           sessionStorage.setItem('Cuenta', 'true');
+          sessionStorage.setItem('usuarioNombre', data.name);
+          
         },
         (error) => {
           this.signupError = 'Error al crear cuenta: ' + (error.error || error.message);

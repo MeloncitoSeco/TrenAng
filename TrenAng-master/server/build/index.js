@@ -67,7 +67,7 @@ app.post("/api/users/create", (req, res) => {
 
   const idFinder = "SELECT email FROM usuario WHERE email = ?";
 
-  // Check if user already exists
+  // Verificar si el usuario ya existe
   conection.query(idFinder, [usuario.email], (err, result) => {
     if (err) {
       console.log(err.message);
@@ -77,23 +77,26 @@ app.post("/api/users/create", (req, res) => {
     if (result.length > 0) {
       res.status(500).json("El usuario ya existe");
     } else {
-      // Hash the password
+      // Hash de la contraseña
       bcrypt.hash(usuario.password, saltRounds, (err, hashedPassword) => {
         if (err) {
           console.log(err.message);
-          return res.status(500).json("Error");
+          return res.status(500).json("Error al hashear la contraseña");
         }
 
-        // Replace plain password with hashed password
+        // Reemplazar la contraseña en claro con la contraseña hasheada
         usuario.password = hashedPassword;
 
+        // Insertar el nuevo usuario en la base de datos
         const insertQuery = "INSERT INTO usuario SET ?";
         conection.query(insertQuery, usuario, (err, result) => {
           if (err) {
             console.log(err.message);
-            return res.status(500).json("Error");
+            return res.status(500).json("Error al insertar el usuario");
           }
-          res.json("Se insertó correctamente");
+
+          // Devolver el nombre del usuario después de crearlo
+          res.json({ name: usuario.name });
         });
       });
     }
@@ -107,7 +110,7 @@ app.post("/api/users/login", (req, res) => {
   };
 
   // Consulta para verificar la contraseña del usuario
-  const checker = `SELECT password FROM usuario WHERE email = ?`;
+  const checker = `SELECT password, name FROM usuario WHERE email = ?`;
 
   // Verificar si el usuario existe y validar la contraseña
   conection.query(checker, [usuario.email], (err, result) => {
@@ -127,24 +130,9 @@ app.post("/api/users/login", (req, res) => {
         }
 
         if (isMatch) {
-          // La contraseña coincide, obtener el nombre del usuario
-          const query = `SELECT name FROM usuario WHERE email = ?`;
-          conection.query(query, [usuario.email], (err, result) => {
-            if (err) {
-              console.log(err.message);
-              return res.status(500).json("Error al obtener el nombre del usuario");
-            }
-
-            if (result.length > 0) {
-              // Retornar el nombre del usuario al cliente
-              const name = result[0].name;
-              res.json({ name });
-            } else {
-              // Si no se encuentra el nombre, retornar error
-              res.status(404).json("No se encontró el nombre del usuario");
-            }
-          });
-          
+          // La contraseña coincide, devolver el nombre del usuario
+          const name = result[0].name;
+          res.json({ name }); // Devolver el nombre del usuario
         } else {
           // La contraseña no coincide
           res.status(401).json("Contraseña incorrecta");
