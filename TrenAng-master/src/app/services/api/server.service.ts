@@ -56,5 +56,17 @@ export class ServerService {
     return this.http.get<Foro[]>('http://localhost:3000/api/foroConversaciones');
   }
 
+  getRespuestas(PId :number): Observable<Foro[]>{
+    return this.http.get<Foro[]>(`http://localhost:3000/api/foroConversaciones/${PId}`);
+  }
+
+  postComentario(foro: Foro): Observable<any> {
+    return this.http.post('http://localhost:3000/api/foroConversaciones/comentar', foro);
+  }
+
+  postNuevoTema(foro: Foro): Observable<any> {
+    return this.http.post('http://localhost:3000/api/foroConversaciones/nuevoTema', foro);
+  }
+
 
 }

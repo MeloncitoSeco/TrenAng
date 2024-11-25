@@ -1,6 +1,4 @@
 <div class="forum-container">
-    <h2>Foro</h2>
-  
     <!-- Crear nueva conversación -->
     <div class="new-thread">
       <h3>Iniciar una nueva conversación</h3>
@@ -19,21 +17,24 @@
       <div *ngFor="let thread of threads; let i = index" class="thread">
         <div class="thread-content">
           <h4>Conversación {{ i + 1 }}</h4>
-          <p>{{ thread.content }}</p>
+          <p>{{ thread.Texto }}</p> <!-- Mostrar el contenido del hilo principal -->
         </div>
   
         <!-- Responder a la conversación -->
         <div class="responses">
           <h5>Respuestas</h5>
-          <div *ngFor="let response of thread.responses" class="response">
-            <p>{{ response }}</p>
+          <div *ngFor="let response of respuestas" class="response">
+            <p>{{ response.Texto }}</p> <!-- Mostrar la respuesta de cada comentario -->
           </div>
   
+          <!-- Responder a la conversación -->
           <textarea 
-            [(ngModel)]="thread.newResponse" 
+            [(ngModel)]="texto[thread.idComentario || 1]" 
             placeholder="Escribe tu respuesta...">
           </textarea>
-          <button (click)="responderAConversacion(i)">Responder</button>
+          <button (click)="responderAConversacion(thread)">
+            Responder
+          </button>
         </div>
       </div>
     </div>

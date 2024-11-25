@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   loginError: string | null = null;
   signupError: string | null = null;
 
-  constructor(private fb: FormBuilder, private serverService: ServerService) {}
+  constructor(private fb: FormBuilder, @Inject(ServerService) private serverService: ServerService) {}
 
   ngOnInit() {
     // Aseguramos que sessionStorage esté correctamente inicializado solo en el navegador
@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
           console.log('Inicio de sesión exitoso:', data);
           sessionStorage.setItem('Cuenta', 'true');
           sessionStorage.setItem('usuarioNombre', data.name); // Almacenar el nombre del usuario
+          sessionStorage.setItem('email', data.email);
           console.log('Nombre del usuario:', sessionStorage.getItem('usuarioNombre'));
         },
         (error) => {
@@ -77,6 +78,7 @@ export class LoginComponent implements OnInit {
           console.log('Cuenta creada exitosamente:', this.respuesta);
           sessionStorage.setItem('Cuenta', 'true');
           sessionStorage.setItem('usuarioNombre', data.name);
+          sessionStorage.setItem('email', data.email);
           
         },
         (error) => {

@@ -130,9 +130,10 @@ app.post("/api/users/login", (req, res) => {
         }
 
         if (isMatch) {
-          // La contraseña coincide, devolver el nombre del usuario
-          const name = result[0].name;
-          res.json({ name }); // Devolver el nombre del usuario
+          // La contraseña coincide, devolver el correo y el nombre del usuario
+          const email = result[0].email; // Obtener el email del usuario
+          const name = result[0].name;   // Obtener el nombre del usuario
+          res.json({ email, name });     // Devolver el email y el nombre en la respuesta
         } else {
           // La contraseña no coincide
           res.status(401).json("Contraseña incorrecta");
@@ -277,7 +278,7 @@ app.post("/api/foroConversaciones/comentar", (req, res) => {
   });
 });
 
-app.post("/api/foroConversaciones/NuevoTema", (req, res) => {
+app.post("/api/foroConversaciones/nuevoTema", (req, res) => {
   const {  Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
   const query = `INSERT INTO foro (PId, Creador, Texto) VALUES (null, ?, ?)`; // Especificar columnas y usar marcadores
   conection.query(query, [ Creador, Texto], (err, result) => { // Pasar los valores como un arreglo

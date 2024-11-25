@@ -1,8 +1,8 @@
 export class Foro {
     constructor(
-        public idComentario: number,
+        public idComentario: number | null,
         public Texto: string,
         public Creador: string,
-        public PId: number
+        public PId: number | null
       ) {}
     }
