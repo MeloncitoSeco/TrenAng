@@ -130,10 +130,9 @@ app.post("/api/users/login", (req, res) => {
         }
 
         if (isMatch) {
-          // La contraseña coincide, devolver el correo y el nombre del usuario
-          const email = result[0].email; // Obtener el email del usuario
-          const name = result[0].name;   // Obtener el nombre del usuario
-          res.json({ email, name });     // Devolver el email y el nombre en la respuesta
+          // La contraseña coincide, devolver el nombre del usuario
+          const name = result[0].name;
+          res.json({ name }); // Devolver el nombre del usuario
         } else {
           // La contraseña no coincide
           res.status(401).json("Contraseña incorrecta");

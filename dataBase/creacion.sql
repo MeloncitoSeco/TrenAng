@@ -21,108 +21,32 @@ CREATE SCHEMA IF NOT EXISTS `fotoTren` DEFAULT CHARACTER SET utf8mb3 ;
 USE `fotoTren` ;
 
 -- -----------------------------------------------------
--- Table `fotoTren`.`tipoTren`
+-- Table `fototren`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fotoTren`.`tipoTren` (
-  `tipoTren` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`tipoTren`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = armscii8;
-
-
--- -----------------------------------------------------
--- Table `fotoTren`.`Tren`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fotoTren`.`Tren` (
-  `trenId` INT NOT NULL,
-  `modelo` VARCHAR(24) NOT NULL,
-  `tipoTren` INT NOT NULL,
-  `fechaFabricacion` INT NOT NULL,
-  PRIMARY KEY (`trenId`),
-  INDEX `tren-tipo_idx` (`tipoTren` ASC),
-  CONSTRAINT `tren-tipo`
-    FOREIGN KEY (`tipoTren`)
-    REFERENCES `fotoTren`.`tipoTren` (`tipoTren`)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `fotoTren`.`Usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fotoTren`.`usuario` (
+CREATE TABLE IF NOT EXISTS `fototren`.`usuario` (
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`email`))
+  PRIMARY KEY (`email`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `fotoTren`.`Publicacion`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fotoTren`.`Publicacion` (
-  `pubId` INT NOT NULL AUTO_INCREMENT,  -- Campo autoincremental
-  `email` VARCHAR(255) NOT NULL,
-  `trenId` INT NOT NULL,
-  `titulo` VARCHAR(120) NOT NULL,
-  `posicion` VARCHAR(45) NOT NULL,
-  `comAuto` VARCHAR(45) NOT NULL,
-  `fechaCrea` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `texto` VARCHAR(2000),
-  PRIMARY KEY (`pubId`),  -- Llave primaria sobre el campo autoincremental
-  INDEX `pub-usu_idx` (`email` ASC),
-  INDEX `pub-tren_idx` (`trenId` ASC),
-  CONSTRAINT `pub-tren`
-    FOREIGN KEY (`trenId`)
-    REFERENCES `fotoTren`.`Tren` (`trenId`)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE,
-  CONSTRAINT `pub-usu`
-    FOREIGN KEY (`email`)
-    REFERENCES `fotoTren`.`Usuario` (`email`)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE
-) ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `fotoTren`.`Imagen`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fotoTren`.`Imagen` (
-  `imgId` INT NOT NULL AUTO_INCREMENT,
-  `fecha` DATETIME NOT NULL,
-  `pubId` INT NOT NULL,
-  PRIMARY KEY (`imgId`),
-  INDEX `img-pub_idx` (`pubId` ASC),
-  CONSTRAINT `img-pub`
-    FOREIGN KEY (`pubId`)
-    REFERENCES `fotoTren`.`Publicacion` (`pubId`)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8mb3;
-
--- -----------------------------------------------------
 -- Table `fototren`.`foro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `fototren`.`foro` (
-  `idComentario` INT NOT NULL AUTO_INCREMENT,
-  `Texto` VARCHAR(100) NOT NULL,
-  `Creador` VARCHAR(255) NOT NULL,
-  `PId` INT NOT NULL,
+  `idComentario` INT(11) NOT NULL AUTO_INCREMENT,
+  `Texto` VARCHAR(500) NOT NULL,
+  `Creador` VARCHAR(45) NOT NULL,
+  `PId` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`idComentario`),
   INDEX `creador_idx` (`Creador` ASC) ,
   INDEX `orden_idx` (`PId` ASC) ,
   CONSTRAINT `creador`
     FOREIGN KEY (`Creador`)
-    REFERENCES `fototren`.`usuario` (`email`)
+    REFERENCES `fototren`.`usuario` (`name`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `orden`
@@ -130,12 +54,94 @@ CREATE TABLE IF NOT EXISTS `fototren`.`foro` (
     REFERENCES `fototren`.`foro` (`idComentario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 9
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `fototren`.`tipotren`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `fototren`.`tipotren` (
+  `tipoTren` INT(11) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`tipoTren`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = armscii8;
+
+
+-- -----------------------------------------------------
+-- Table `fototren`.`tren`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `fototren`.`tren` (
+  `trenId` INT(11) NOT NULL,
+  `modelo` VARCHAR(24) NOT NULL,
+  `tipoTren` INT(11) NOT NULL,
+  `fechaFabricacion` INT(11) NOT NULL,
+  PRIMARY KEY (`trenId`),
+  INDEX `tren-tipo_idx` (`tipoTren` ASC) ,
+  CONSTRAINT `tren-tipo`
+    FOREIGN KEY (`tipoTren`)
+    REFERENCES `fototren`.`tipotren` (`tipoTren`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `fototren`.`publicacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `fototren`.`publicacion` (
+  `pubId` INT(11) NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) NOT NULL,
+  `trenId` INT(11) NOT NULL,
+  `titulo` VARCHAR(120) NOT NULL,
+  `posicion` VARCHAR(45) NOT NULL,
+  `comAuto` VARCHAR(45) NOT NULL,
+  `fechaCrea` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `texto` VARCHAR(2000) NULL DEFAULT NULL,
+  PRIMARY KEY (`pubId`),
+  INDEX `pub-usu_idx` (`email` ASC) ,
+  INDEX `pub-tren_idx` (`trenId` ASC) ,
+  CONSTRAINT `pub-tren`
+    FOREIGN KEY (`trenId`)
+    REFERENCES `fototren`.`tren` (`trenId`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+  CONSTRAINT `pub-usu`
+    FOREIGN KEY (`email`)
+    REFERENCES `fototren`.`usuario` (`email`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `fototren`.`imagen`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `fototren`.`imagen` (
+  `imgId` INT(11) NOT NULL AUTO_INCREMENT,
+  `fecha` DATETIME NOT NULL,
+  `pubId` INT(11) NOT NULL,
+  PRIMARY KEY (`imgId`),
+  INDEX `img-pub_idx` (`pubId` ASC) ,
+  CONSTRAINT `img-pub`
+    FOREIGN KEY (`pubId`)
+    REFERENCES `fototren`.`publicacion` (`pubId`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 -- -----------------------------------------------------
 -- Data for table `fotoTren`.`tipoTren`
@@ -230,9 +236,9 @@ COMMIT;
 start transaction;
 INSERT INTO `fototren`.`foro` (`Texto`, `Creador`, `PId`) 
 VALUES 
-    ('Este es el primer comentario del foro.', 'ana@example.com', 0),
-    ('Discutamos sobre trenes históricos.', 'luis@example.com', 0),
-    ('Bienvenidos al foro de fotografía de trenes.', 'maria@example.com', 0);
+    ('Este es el primer comentario del foro.', 'ana@example.com', null),
+    ('Discutamos sobre trenes históricos.', 'luis@example.com', null),
+    ('Bienvenidos al foro de fotografía de trenes.', 'maria@example.com', null);
 
 INSERT INTO `fototren`.`foro` (`Texto`, `Creador`, `PId`) 
 VALUES 

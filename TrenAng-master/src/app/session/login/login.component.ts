@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit {
           console.log('Inicio de sesión exitoso:', data);
           sessionStorage.setItem('Cuenta', 'true');
           sessionStorage.setItem('usuarioNombre', data.name); // Almacenar el nombre del usuario
-          sessionStorage.setItem('email', data.email);
           console.log('Nombre del usuario:', sessionStorage.getItem('usuarioNombre'));
         },
         (error) => {
@@ -78,7 +77,6 @@ export class LoginComponent implements OnInit {
           console.log('Cuenta creada exitosamente:', this.respuesta);
           sessionStorage.setItem('Cuenta', 'true');
           sessionStorage.setItem('usuarioNombre', data.name);
-          sessionStorage.setItem('email', data.email);
           
         },
         (error) => {

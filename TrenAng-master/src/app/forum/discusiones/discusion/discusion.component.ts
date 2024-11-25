@@ -63,13 +63,13 @@ export class DiscusionComponent implements OnInit {
 
   // Responder a una conversación existente
   responderAConversacion(thread: Foro) {
-    console.log("Email: " + sessionStorage.getItem('email'));
+    console.log("usuario: " + sessionStorage.getItem('usuarioNombre'));
     const respuestaTexto = this.texto[thread.idComentario || 0]; // Obtener texto de respuesta por idComentario
     if (respuestaTexto?.trim()) {
       const respuesta: Foro = {
         idComentario: null,
         Texto: respuestaTexto.trim(),
-        Creador: sessionStorage.getItem('email') || '', // Ajustar según autenticación
+        Creador: sessionStorage.getItem('usuarioNombre') || '', // Ajustar según autenticación
         PId: thread.idComentario || null
       };
 
