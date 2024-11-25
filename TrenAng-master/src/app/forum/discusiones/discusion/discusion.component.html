@@ -1,0 +1,40 @@
+<div class="forum-container">
+    <h2>Foro</h2>
+  
+    <!-- Crear nueva conversación -->
+    <div class="new-thread">
+      <h3>Iniciar una nueva conversación</h3>
+      <textarea 
+        [(ngModel)]="newThreadContent" 
+        placeholder="Escribe un tema para la conversación...">
+      </textarea>
+      <button (click)="crearNuevaConversacion()">Publicar</button>
+    </div>
+  
+    <hr />
+  
+    <!-- Listar conversaciones -->
+    <div class="threads">
+      <h3>Conversaciones</h3>
+      <div *ngFor="let thread of threads; let i = index" class="thread">
+        <div class="thread-content">
+          <h4>Conversación {{ i + 1 }}</h4>
+          <p>{{ thread.content }}</p>
+        </div>
+  
+        <!-- Responder a la conversación -->
+        <div class="responses">
+          <h5>Respuestas</h5>
+          <div *ngFor="let response of thread.responses" class="response">
+            <p>{{ response }}</p>
+          </div>
+  
+          <textarea 
+            [(ngModel)]="thread.newResponse" 
+            placeholder="Escribe tu respuesta...">
+          </textarea>
+          <button (click)="responderAConversacion(i)">Responder</button>
+        </div>
+      </div>
+    </div>
+  </div>

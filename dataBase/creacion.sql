@@ -109,6 +109,29 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb3;
 
+-- -----------------------------------------------------
+-- Table `fototren`.`foro`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `fototren`.`foro` (
+  `idComentario` INT NOT NULL AUTO_INCREMENT,
+  `Texto` VARCHAR(100) NOT NULL,
+  `Creador` VARCHAR(255) NOT NULL,
+  `PId` INT NOT NULL,
+  PRIMARY KEY (`idComentario`),
+  INDEX `creador_idx` (`Creador` ASC) ,
+  INDEX `orden_idx` (`PId` ASC) ,
+  CONSTRAINT `creador`
+    FOREIGN KEY (`Creador`)
+    REFERENCES `fototren`.`usuario` (`email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `orden`
+    FOREIGN KEY (`PId`)
+    REFERENCES `fototren`.`foro` (`idComentario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -119,15 +142,18 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (1, 'Ave');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (2, 'Alvia');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (3, 'Avant');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (4, 'IRYO');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (5, 'OUIGO');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (6, 'LD');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (7, 'MD');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (8, 'Cercanias/Rodalies');
-INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) VALUES (9, 'AM');
+INSERT INTO `fotoTren`.`tipoTren` (`tipoTren`, `name`) 
+VALUES 
+    (1, 'Ave'),
+    (2, 'Alvia'),
+    (3, 'Avant'),
+    (4, 'IRYO'),
+    (5, 'OUIGO'),
+    (6, 'LD'),
+    (7, 'MD'),
+    (8, 'Cercanias/Rodalies'),
+    (9, 'AM');
+
 
 COMMIT;
 
@@ -137,9 +163,14 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (1, 'Civia', 8, 2003);
-INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (2, 'IRYO', 4, 2020);
-INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) VALUES (3, 'Gorg', 3, 2024);
+INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) 
+VALUES 
+    (1, 'Civia', 8, 2003),
+    (2, 'IRYO', 4, 2020),
+    (3, 'Alvia S-120', 2, 2015),
+    (4, 'Ave S-103', 1, 2010),
+    (5, 'Avant S-104', 3, 2018);
+
 
 COMMIT;
 
@@ -149,8 +180,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`usuario` (`name`, `email`, `password`) VALUES ('Santi', 'santiago@gmail.com', '1234');
-INSERT INTO `fotoTren`.`usuario` (`name`, `email`, `password`) VALUES ('Miriam', 'miri@gmail.com', '1234');
+INSERT INTO `fotoTren`.`usuario` (`name`, `email`, `password`) 
+VALUES 
+    ('Santiago', 'santiago@gmail.com', 'password123'),
+    ('Miriam', 'miriam@gmail.com', 'mypass2024'),
+    ('Carlos', 'carlos@example.com', 'trainlover'),
+    ('Elena', 'elena@example.com', 'password456');
 
 COMMIT;
 
@@ -160,10 +195,14 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`Publicacion` ( `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES ( 'santiago@gmail.com', 1, 'Primer Civia', 'Quieto', 'Andalucía');
-INSERT INTO `fotoTren`.`Publicacion` ( `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES ( 'santiago@gmail.com', 2, 'Iryo', 'Quieto', 'Navarra');
-INSERT INTO `fotoTren`.`Publicacion` ( `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES ( 'miri@gmail.com', 3, 'Iryo', 'Moviendo', 'Catalunia');
-INSERT INTO `fotoTren`.`Publicacion` ( `email`, `trenId`, `titulo`, `posicion`, `comAuto`) VALUES ( 'santiago@gmail.com', 2, 'otro', 'Moviendo', 'Catalunia');
+INSERT INTO `fotoTren`.`Publicacion` (`email`, `trenId`, `titulo`, `posicion`, `comAuto`, `texto`) 
+VALUES 
+    ('santiago@gmail.com', 1, 'Civia en Andalucía', 'Quieto', 'Andalucía', 'Hermosa mañana para una foto de este tren.'),
+    ('miriam@gmail.com', 2, 'IRYO desde Navarra', 'Moviendo', 'Navarra', 'Un gran tren para un viaje inolvidable.'),
+    ('carlos@example.com', 3, 'Alvia en Cataluña', 'Moviendo', 'Cataluña', 'Impresionante velocidad capturada.'),
+    ('elena@example.com', 4, 'Ave por Madrid', 'Quieto', 'Madrid', 'Una vista increíble del Ave en el andén.');
+
+
 COMMIT;
 
 
@@ -172,16 +211,34 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 10:30:00', 1);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 11:00:00', 1);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 12:15:00', 2);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 13:20:00', 2);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 14:25:00', 3);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 15:30:00', 3);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 16:45:00', 4);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 17:50:00', 4);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 18:55:00', 1);
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) VALUES ('2024-10-16 19:10:00', 2);
+INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) 
+VALUES 
+    ('2024-10-16 10:30:00', 1),
+    ('2024-10-16 11:00:00', 1),
+    ('2024-10-16 12:15:00', 2),
+    ('2024-10-16 13:20:00', 2),
+    ('2024-10-16 14:25:00', 3),
+    ('2024-10-16 15:30:00', 3),
+    ('2024-10-16 16:45:00', 4),
+    ('2024-10-16 17:50:00', 4),
+    ('2024-10-16 18:55:00', 1),
+    ('2024-10-16 19:10:00', 2);
+
 
 
 COMMIT;
+start transaction;
+INSERT INTO `fototren`.`foro` (`Texto`, `Creador`, `PId`) 
+VALUES 
+    ('Este es el primer comentario del foro.', 'ana@example.com', 0),
+    ('Discutamos sobre trenes históricos.', 'luis@example.com', 0),
+    ('Bienvenidos al foro de fotografía de trenes.', 'maria@example.com', 0);
+
+INSERT INTO `fototren`.`foro` (`Texto`, `Creador`, `PId`) 
+VALUES 
+    ('¡Me encanta este tema!', 'luis@example.com', 1), -- Respuesta al primer comentario
+    ('¿Qué opinan del tren AVE?', 'maria@example.com', 1), -- Respuesta al primer comentario
+    ('Tengo fotos del tren AVE en acción.', 'ana@example.com', 2), -- Respuesta al segundo comentario
+    ('¡Excelente idea para compartir fotos!', 'maria@example.com', 2), -- Respuesta al segundo comentario
+    ('Gracias, espero que les guste.', 'ana@example.com', 4); -- Respuesta al cuarto comentario
+commit;

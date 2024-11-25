@@ -227,3 +227,64 @@ app.delete("/api/publications/delete/:pubId", (req, res) => {
     }
   });
 });
+
+
+
+// GET foro
+app.get("/api/foroConversaciones", (req, res) => {
+  const { pubId } = req.params;
+  const query = `SELECT * FROM foro where PId IS null `;
+  
+  conection.query(query, (err, result) => {
+    if (err) return console.log(err.message);
+
+    if (result.length > 0) {
+      res.json(result);
+    } else {
+      res.json("No hay publicaciones con ese id");
+    }
+  });
+});
+
+// GET foro
+app.get("/api/foroConversaciones/:PId", (req, res) => {
+  const { pubId } = req.params;
+  const query = `SELECT * FROM foro WHERE PId = ${PId}`;
+  
+  conection.query(query, (err, result) => {
+    if (err) return console.log(err.message);
+
+    if (result.length > 0) {
+      res.json(result);
+    } else {
+      res.json("No hay publicaciones con ese id");
+    }
+  });
+});
+
+
+//POST Foro
+
+app.post("/api/foroConversaciones/comentar", (req, res) => {
+  const { PId, Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
+  const query = `INSERT INTO foro (PId, Creador, Texto) VALUES (?, ?, ?)`; // Especificar columnas y usar marcadores
+  conection.query(query, [PId, Creador, Texto], (err, result) => { // Pasar los valores como un arreglo
+    if (err) {
+      console.log(err.message);
+      return res.status(500).json({ error: err.message });
+    }
+    res.json("Se insertó correctamente");
+  });
+});
+
+app.post("/api/foroConversaciones/NuevoTema", (req, res) => {
+  const {  Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
+  const query = `INSERT INTO foro (PId, Creador, Texto) VALUES (null, ?, ?)`; // Especificar columnas y usar marcadores
+  conection.query(query, [ Creador, Texto], (err, result) => { // Pasar los valores como un arreglo
+    if (err) {
+      console.log(err.message);
+      return res.status(500).json({ error: err.message });
+    }
+    res.json("Se insertó correctamente");
+  });
+});

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Inject, OnInit, Output } from '@angular/core';
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http'; 
 import { ServerService } from '../../services/api/server.service';
@@ -14,7 +14,7 @@ import { ServerService } from '../../services/api/server.service';
 export class PublicationsComponent implements OnInit {
   publications: any[] = [];
 
-  constructor(private serverService: ServerService) {}
+  constructor(@Inject(ServerService) private serverService: ServerService) {}
 
   ngOnInit(): void {
     this.serverService.getPublications().subscribe(

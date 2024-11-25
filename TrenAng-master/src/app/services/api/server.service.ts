@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TipoTren } from '../../clases/tipoTren/tipo-tren';
 import { Usuario } from '../../clases/usuario/usuario';
+import { Foro } from '../../clases/foro/foro';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,9 @@ export class ServerService {
     return this.http.post('http://localhost:3000/api/users/create', datosUsuario);
   }
   
+  getConversaiones(): Observable<Foro[]> {
+    return this.http.get<Foro[]>('http://localhost:3000/api/foroConversaciones');
+  }
 
 
 }
