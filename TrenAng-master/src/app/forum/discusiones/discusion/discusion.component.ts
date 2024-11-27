@@ -45,7 +45,7 @@ export class DiscusionComponent implements OnInit {
       const newThread: Foro = {
         idComentario: null,
         Texto: this.newThreadContent.trim(),
-        Creador: sessionStorage.getItem('email') || '', // Ajustar según autenticación
+        Creador: sessionStorage.getItem('name') || '', // Ajustar según autenticación
         PId: null
       };
 
