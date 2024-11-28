@@ -1,12 +1,12 @@
 import { Component, EventEmitter, HostListener, Inject, OnInit, Output } from '@angular/core';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgIf, NgFor, NgClass, CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http'; 
 import { ServerService } from '../../services/api/server.service';
 
 @Component({
   selector: 'app-publications',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, HttpClientModule],
+  imports: [NgIf, NgFor, NgClass, HttpClientModule,CommonModule],
   templateUrl: './publications.component.html',
   styleUrl: './publications.component.scss',
   providers: [ServerService],

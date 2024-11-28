@@ -19,8 +19,11 @@
           (error)="onImageError()"
         />
       </div>
-      <div class="truncateText" [ngClass]="{ expanded: expandedPubId === publicacion.pubId }">
-        <p>{{ publicacion.fechaCrea }}</p>
+      <div class="truncateText" [ngClass]="{ expanded: expandedPubId === publicacion.pubId }" >
+        
+          <p>{{ publicacion.fechaCrea | date: 'medium' }}</p>
+        <p>{{ publicacion.texto }}</p>
+        
       </div>
     </div>
   </div>
