@@ -248,7 +248,7 @@ app.get("/api/foroConversaciones", (req, res) => {
 
 // GET foro
 app.get("/api/foroConversaciones/:PId", (req, res) => {
-  const { pubId } = req.params;
+  const { PId } = req.params;
   const query = `SELECT * FROM Foro WHERE PId = ${PId}`;
   
   conection.query(query, (err, result) => {
