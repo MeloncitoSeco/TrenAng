@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Foro } from '../../../clases/foro/foro';
 import { ServerService } from '../../../services/api/server.service';
 
-import { log } from 'console';
 
 @Component({
   selector: 'app-discusion',
@@ -25,6 +24,7 @@ export class DiscusionComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarConversaciones(); // Cargar las conversaciones al iniciar
+    console.log('estas son las variables' + (sessionStorage.getItem('usuarioNombre')));
   }
 
   // Cargar todas las conversaciones principales (PId = null)
@@ -45,7 +45,7 @@ export class DiscusionComponent implements OnInit {
       const newThread: Foro = {
         idComentario: null,
         Texto: this.newThreadContent.trim(),
-        Creador: sessionStorage.getItem('name') || '', // Ajustar según autenticación
+        Creador: sessionStorage.getItem('usuarioNombre') || '', // Ajustar según autenticación
         PId: null
       };
 

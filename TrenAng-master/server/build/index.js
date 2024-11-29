@@ -51,7 +51,7 @@ app.get("/api/trains/types", (req, res) => {
 });
 
 app.get("/api/users", (req, res) => {
-  const query = "SELECT * FROM usuario";
+  const query = "SELECT * FROM Usuario";
   conection.query(query, (err, result) => {
     if (err) return console.log(err.message);
     res.json(result);
@@ -65,7 +65,7 @@ app.post("/api/users/create", (req, res) => {
     password: req.body.password,
   };
 
-  const idFinder = "SELECT email FROM usuario WHERE email = ?";
+  const idFinder = "SELECT email FROM Usuario WHERE email = ?";
 
   // Verificar si el usuario ya existe
   conection.query(idFinder, [usuario.email], (err, result) => {
@@ -88,7 +88,7 @@ app.post("/api/users/create", (req, res) => {
         usuario.password = hashedPassword;
 
         // Insertar el nuevo usuario en la base de datos
-        const insertQuery = "INSERT INTO usuario SET ?";
+        const insertQuery = "INSERT INTO Usuario SET ?";
         conection.query(insertQuery, usuario, (err, result) => {
           if (err) {
             console.log(err.message);
@@ -110,7 +110,7 @@ app.post("/api/users/login", (req, res) => {
   };
 
   // Consulta para verificar la contraseña del usuario
-  const checker = `SELECT password, name FROM usuario WHERE email = ?`;
+  const checker = `SELECT password, name FROM Usuario WHERE email = ?`;
 
   // Verificar si el usuario existe y validar la contraseña
   conection.query(checker, [usuario.email], (err, result) => {
@@ -233,7 +233,7 @@ app.delete("/api/publications/delete/:pubId", (req, res) => {
 // GET foro
 app.get("/api/foroConversaciones", (req, res) => {
   const { pubId } = req.params;
-  const query = `SELECT * FROM foro where PId IS null `;
+  const query = `SELECT * FROM Foro where PId IS null `;
   
   conection.query(query, (err, result) => {
     if (err) return console.log(err.message);
@@ -249,7 +249,7 @@ app.get("/api/foroConversaciones", (req, res) => {
 // GET foro
 app.get("/api/foroConversaciones/:PId", (req, res) => {
   const { pubId } = req.params;
-  const query = `SELECT * FROM foro WHERE PId = ${PId}`;
+  const query = `SELECT * FROM Foro WHERE PId = ${PId}`;
   
   conection.query(query, (err, result) => {
     if (err) return console.log(err.message);
@@ -267,7 +267,7 @@ app.get("/api/foroConversaciones/:PId", (req, res) => {
 
 app.post("/api/foroConversaciones/comentar", (req, res) => {
   const { PId, Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
-  const query = `INSERT INTO foro (PId, Creador, Texto) VALUES (?, ?, ?)`; // Especificar columnas y usar marcadores
+  const query = `INSERT INTO Foro (PId, Creador, Texto) VALUES (?, ?, ?)`; // Especificar columnas y usar marcadores
   conection.query(query, [PId, Creador, Texto], (err, result) => { // Pasar los valores como un arreglo
     if (err) {
       console.log(err.message);
@@ -279,7 +279,7 @@ app.post("/api/foroConversaciones/comentar", (req, res) => {
 
 app.post("/api/foroConversaciones/nuevoTema", (req, res) => {
   const {  Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
-  const query = `INSERT INTO foro (PId, Creador, Texto) VALUES (null, ?, ?)`; // Especificar columnas y usar marcadores
+  const query = `INSERT INTO Foro (PId, Creador, Texto) VALUES (null, ?, ?)`; // Especificar columnas y usar marcadores
   conection.query(query, [ Creador, Texto], (err, result) => { // Pasar los valores como un arreglo
     if (err) {
       console.log(err.message);

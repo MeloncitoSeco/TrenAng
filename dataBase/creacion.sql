@@ -36,7 +36,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `fotoTren`.`foro`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fotoTren`.`foro` (
+CREATE TABLE IF NOT EXISTS `fotoTren`.`Foro` (
   `idComentario` INT(11) NOT NULL AUTO_INCREMENT,
   `Texto` VARCHAR(500) NOT NULL,
   `Creador` VARCHAR(45) NOT NULL,
@@ -44,14 +44,14 @@ CREATE TABLE IF NOT EXISTS `fotoTren`.`foro` (
   PRIMARY KEY (`idComentario`),
   INDEX `creador_idx` (`Creador` ASC) ,
   INDEX `orden_idx` (`PId` ASC) ,
-  CONSTRAINT `creador`
-    FOREIGN KEY (`Creador`)
+  CONSTRAINT `Creador`
+    FOREIGN KEY (`creador`)
     REFERENCES `fotoTren`.`Usuario` (`name`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `orden`
+  CONSTRAINT `Orden`
     FOREIGN KEY (`PId`)
-    REFERENCES `fotoTren`.`foro` (`idComentario`)
+    REFERENCES `fotoTren`.`Foro` (`idComentario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `fotoTren`.`Publicacion` (
   INDEX `pub-tren_idx` (`trenId` ASC) ,
   CONSTRAINT `pub-tren`
     FOREIGN KEY (`trenId`)
-    REFERENCES `fotoTren`.`tren` (`trenId`)
+    REFERENCES `fotoTren`.`Tren` (`trenId`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT `pub-usu`
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `fotoTren`.`Imagen` (
   INDEX `img-pub_idx` (`pubId` ASC) ,
   CONSTRAINT `img-pub`
     FOREIGN KEY (`pubId`)
-    REFERENCES `fotoTren`.`publicacion` (`pubId`)
+    REFERENCES `fotoTren`.`Publicacion` (`pubId`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -204,8 +204,8 @@ USE `fotoTren`;
 INSERT INTO `fotoTren`.`Publicacion` (`email`, `trenId`, `titulo`, `posicion`, `comAuto`, `texto`) 
 VALUES 
     ('santiago@gmail.com', 1, 'Civia en Andalucía', 'Quieto', 'Andalucía', 'Hermosa mañana para una foto de este tren.'),
-    ('miriam@gmail.com', 2, 'IRYO desde Navarra', 'Moviendo', 'Navarra', 'Un gran tren para un viaje inolvidable.'),
-    ('carlos@example.com', 3, 'Alvia en Cataluña', 'Moviendo', 'Cataluña', 'Impresionante velocidad capturada.'),
+    ('carlos@example.com', 2, 'IRYO desde Navarra', 'Moviendo', 'Navarra', 'Un gran tren para un viaje inolvidable.'),
+    ('miriam@gmail.com', 3, 'Alvia en Cataluña', 'Moviendo', 'Cataluña', 'Impresionante velocidad capturada.'),
     ('elena@example.com', 4, 'Ave por Madrid', 'Quieto', 'Madrid', 'Una vista increíble del Ave en el andén.');
 
 
@@ -225,8 +225,8 @@ VALUES
     ('2024-10-16 13:20:00', 2),
     ('2024-10-16 14:25:00', 3),
     ('2024-10-16 15:30:00', 3),
-    ('2024-10-16 16:45:00', 4),
-    ('2024-10-16 17:50:00', 4),
+    ('2024-10-16 16:45:00', 2),
+    ('2024-10-16 17:50:00', 2),
     ('2024-10-16 18:55:00', 1),
     ('2024-10-16 19:10:00', 2);
 
@@ -234,17 +234,17 @@ VALUES
 
 COMMIT;
 start transaction;
-INSERT INTO `fotoTren`.`foro` (`Texto`, `Creador`, `PId`) 
+INSERT INTO `fotoTren`.`Foro` (`Texto`, `Creador`, `PId`) 
 VALUES 
-    ('Este es el primer comentario del foro.', 'ana@example.com', null),
-    ('Discutamos sobre trenes históricos.', 'luis@example.com', null),
-    ('Bienvenidos al foro de fotografía de trenes.', 'maria@example.com', null);
+    ('Este es el primer comentario del foro.', 'Miriam', null),
+    ('Discutamos sobre trenes históricos.', 'Miriam', null),
+    ('Bienvenidos al foro de fotografía de trenes.', 'Miriam', null);
 
-INSERT INTO `fotoTren`.`foro` (`Texto`, `Creador`, `PId`) 
+INSERT INTO `fotoTren`.`Foro` (`Texto`, `Creador`, `PId`) 
 VALUES 
-    ('¡Me encanta este tema!', 'luis@example.com', 1), -- Respuesta al primer comentario
-    ('¿Qué opinan del tren AVE?', 'maria@example.com', 1), -- Respuesta al primer comentario
-    ('Tengo fotos del tren AVE en acción.', 'ana@example.com', 2), -- Respuesta al segundo comentario
-    ('¡Excelente idea para compartir fotos!', 'maria@example.com', 2), -- Respuesta al segundo comentario
-    ('Gracias, espero que les guste.', 'ana@example.com', 4); -- Respuesta al cuarto comentario
+    ('¡Me encanta este tema!', 'Miriam', 1), -- Respuesta al primer comentario
+    ('¿Qué opinan del tren AVE?', 'Miriam', 1), -- Respuesta al primer comentario
+    ('Tengo fotos del tren AVE en acción.', 'Miriam', 2), -- Respuesta al segundo comentario
+    ('¡Excelente idea para compartir fotos!', 'Miriam', 2), -- Respuesta al segundo comentario
+    ('Gracias, espero que les guste.', 'Miriam', 4); -- Respuesta al cuarto comentario
 commit;	

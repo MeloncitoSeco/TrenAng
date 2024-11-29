@@ -1,20 +1,19 @@
 use fotoTren;
-select * from imagen;
-select * from publicacion;
-select * from tipotren;
-select * from tren;
-select * from usuario;
+select * from Imagen;
+select * from Publicacion;
+select * from tipoTren;
+select * from Tren;
+select * from Usuario;
+select * from Foro;
 -- Todos los datos
-select * from publicacion as pub  join tren as tren on tren.trenId=pub.trenId join tipotren as tip on tip.tipoTren=tren.tipoTren; 
+select * from Publicacion as pub  join Tren as tren on tren.trenId=pub.trenId join tipoTren as tip on tip.tipoTren=tren.tipoTren; 
 
-select * from imagen as img join publicacion as pub on img.pubId=pub.pubId where pub.pubId=1 order by img.imgId asc  ;
-
-
+select * from Imagen as img join Publicacion as pub on img.pubId=pub.pubId where pub.pubId=1 order by img.imgId asc  ;
 
 
-select * from imagen as img join publicacion as pub on img.pubId=pub.pubId group by pub.pubId  ;
 
 
+select * from Imagen as img join Publicacion as pub on img.pubId=pub.pubId  ;
 
 
 
