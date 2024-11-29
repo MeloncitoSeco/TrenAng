@@ -146,7 +146,7 @@ app.post("/api/users/login", (req, res) => {
 });
 
 app.get("/api/publications", (req, res) => {
-  const query = "select * from imagen as img join publicacion as pub on img.pubId=pub.pubId group by pub.pubId  ;";
+  const query = "select * from Imagen as img join Publicacion as pub on img.pubId=pub.pubId group by pub.pubId  ;";
   conection.query(query, (err, result) => {
     if (err) console.log(err.message);
 
