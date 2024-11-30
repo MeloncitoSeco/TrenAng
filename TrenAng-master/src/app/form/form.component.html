@@ -1,74 +1,71 @@
+<mat-stepper class="colorChangerForm" style="margin-top: 70px;" [orientation]="(stepperOrientation | async)!">
 
-
-<mat-stepper
-  class="colorChangerForm "
-  style="margin-top: 70px;"
-  [orientation]="(stepperOrientation | async)!">
-  <mat-step [stepControl]="firstFormGroup" label="Publicacion" >
-    <form [formGroup]="firstFormGroup" >
-      <mat-form-field >
+  <!-- Paso 1 -->
+  <mat-step [stepControl]="firstFormGroup" label="Publicacion">
+    <form [formGroup]="firstFormGroup">
+      <mat-form-field>
         <mat-label class="colorChangerTestNoBg">Titulo</mat-label>
-        <input matInput placeholder="Titulo publicacion" formControlName="firstCtrl" required >
+        <input matInput placeholder="Titulo publicacion" formControlName="titulo" required>
       </mat-form-field>
-      <mat-form-field class="Field">
+      <mat-form-field>
         <mat-label>Descripcion</mat-label>
-        <input matInput placeholder="Texto" formControlName="firstCtrl" required>
+        <input matInput placeholder="Texto" formControlName="descripcion" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Tren" state="chat">
-  <form [formGroup]="secondFormGroup">
-    <mat-form-field>
-      <mat-label>Selecciona un tren</mat-label>
-      <mat-select formControlName="secondCtrl" required>
-        <!-- Itera sobre listaTipoTrenes para generar las opciones -->
-        <mat-option *ngFor="let tren of listaTipoTrenes" [value]="tren.tipoTren">
-          {{ tren.nombre }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Modelo</mat-label>
-      <input matInput placeholder="Modelo especifico" formControlName="secondCtrl" required>
-    </mat-form-field>
-    <div>
-      <button mat-button matStepperPrevious>Anterior</button>
-      <button mat-button matStepperNext>Siguiente</button>
-    </div>
-  </form>
-</mat-step>
+
+  <!-- Paso 2 -->
+  <mat-step [stepControl]="secondFormGroup" label="Tren">
+    <form [formGroup]="secondFormGroup">
+      <mat-form-field>
+        <mat-label>Selecciona un tren</mat-label>
+        <mat-select formControlName="tren" required> <!-- Añadido formControlName -->
+          <mat-option *ngFor="let tren of listaTipoTrenes" [value]="tren.tipoTren">
+            {{ tren.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Modelo</mat-label>
+        <input matInput placeholder="Modelo especifico" formControlName="modelo" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Anterior</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Paso 3 -->
   <mat-step [stepControl]="thirdFormGroup" label="Ubicacion">
     <form [formGroup]="thirdFormGroup">
       <mat-form-field>
-        <mat-label>Phone number</mat-label>
-        <input matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
+        <mat-label>Ubicacion</mat-label>
+        <input matInput formControlName="ubicacion" placeholder="Ex. Madrid" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>Anterior</button>
+        <button mat-button matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="thirdFormGroup" label="Fill out your phone number">
-    <form [formGroup]="thirdFormGroup">
-      <mat-form-field>
-        <mat-label>Phone number</mat-label>
-        <input matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
+
+  <!-- Paso Final -->
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+    <ng-template matStepLabel>Finalizar</ng-template>
+    <p>¿Deseas enviar la información ingresada?</p>
+    <form [formGroup]="finalStepFormGroup">
+      <div>
+        <label for="fileInput">Subir una foto</label>
+        <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+    </form>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperPrevious>Anterior</button>
+      <button mat-button (click)="onSubmit()">Enviar</button>
     </div>
   </mat-step>
 </mat-stepper>

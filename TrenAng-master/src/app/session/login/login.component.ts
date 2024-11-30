@@ -28,8 +28,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     // Aseguramos que sessionStorage esté correctamente inicializado solo en el navegador
+    
     if (typeof window !== 'undefined' && sessionStorage) {
+      console.log(sessionStorage.getItem('Cuenta') , sessionStorage.getItem('usuarioNombre'));
       if (!sessionStorage.getItem('Cuenta')) {
+        console.log(sessionStorage.getItem('Cuenta'));
         sessionStorage.setItem('Cuenta', 'false');
       }
     }

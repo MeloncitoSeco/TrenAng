@@ -3,8 +3,9 @@ const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const { log } = require("console");
+const multer = require('multer');
 const saltRounds = 10; // Define the cost factor for hashing
-
+const router = express.Router();
 
 const app = express();
 
@@ -14,6 +15,17 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Permite estas cabeceras
   next();
 });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Carpeta donde se guardarán los archivos
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Nombre único para cada archivo
+  },
+});
+
+const upload = multer({ storage: storage });
+
 
 app.use(bodyParser.json());
 
@@ -144,6 +156,27 @@ app.post("/api/users/login", (req, res) => {
     }
   });
 });
+
+
+
+
+router.post('/upload', upload.single('file'), (req, res) => {
+  const { titulo, descripcion, tren, modelo, ubicacion } = req.body;
+  const file = req.file;
+
+  if (!file) {
+    return res.status(400).json({ error: 'Archivo no subido' });
+  }
+
+  console.log('Datos del formulario:', { titulo, descripcion, tren, modelo, ubicacion });
+  console.log('Archivo subido:', file);
+
+  res.status(200).json({ message: 'Formulario recibido con éxito', data: req.body });
+});
+
+module.exports = router;
+
+
 
 app.get("/api/publications", (req, res) => {
   const query = "select * from Imagen as img join Publicacion as pub on img.pubId=pub.pubId group by pub.pubId  ;";
@@ -287,4 +320,8 @@ app.post("/api/foroConversaciones/nuevoTema", (req, res) => {
     }
     res.json("Se insertó correctamente");
   });
+});
+app.use((req, res, next) => {
+  console.log(`Solicitud recibida: ${req.method} ${req.url}`);
+  next();
 });

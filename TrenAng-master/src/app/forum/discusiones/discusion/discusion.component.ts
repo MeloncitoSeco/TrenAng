@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Foro } from '../../../clases/foro/foro';
 import { ServerService } from '../../../services/api/server.service';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-discusion',
   standalone: true,
-  imports: [FormsModule, CommonModule], 
+  imports: [FormsModule, CommonModule],
   templateUrl: './discusion.component.html',
   styleUrl: './discusion.component.scss'
 })
@@ -20,11 +21,30 @@ export class DiscusionComponent implements OnInit {
   pId: number | null = null; // ID del hilo actual
   idComentario: number | null = null; // ID del comentario actual
 
-  constructor(private serverService: ServerService) {}
+  constructor(private serverService: ServerService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.cargarConversaciones(); // Cargar las conversaciones al iniciar
-    console.log('estas son las variables' + (sessionStorage.getItem('usuarioNombre')));
+    try {
+      // Verificar si estamos en el navegador
+      if (isPlatformBrowser(this.platformId)) {
+        const valor: string | null = sessionStorage.getItem('usuarioNombre');
+        console.log(valor)
+
+        if (valor) {
+          this.cargarConversaciones(); // Cargar las conversaciones al iniciar
+          console.log('estas son las variables' + (sessionStorage.getItem('usuarioNombre')));
+        } else {
+          this.router.navigate(['/login']); // Redirigir al login
+        }
+      } else {
+        console.warn('sessionStorage no está disponible fuera del navegador.');
+      }
+    } catch (error) {
+      console.error('Se produjo un error al acceder a sessionStorage:', error);
+    }
   }
 
   // Cargar todas las conversaciones principales (PId = null)

@@ -15,8 +15,5 @@ export class ThemeChangerComponent {
     const currentTheme = this.themesService.getTheme();
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     this.themesService.setTheme(newTheme);
-    
-    // Agregar log para depuración
-    console.log('Theme toggled to:', newTheme);
   }
 }

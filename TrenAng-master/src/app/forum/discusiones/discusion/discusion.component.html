@@ -1,8 +1,8 @@
-<div class="forum-container">
+<div class="forum-container colorChanger">
     <!-- Crear nueva conversación -->
-    <div class="new-thread">
+    <div class="new-thread colorChanger">
       <h3>Iniciar una nueva conversación</h3>
-      <textarea 
+      <textarea class="colorChanger"
         [(ngModel)]="newThreadContent" 
         placeholder="Escribe un tema para la conversación...">
       </textarea>
@@ -12,26 +12,30 @@
     <hr />
   
     <!-- Listar conversaciones -->
-    <div class="threads">
+    <div class="threads colorChanger">
       <h3>Conversaciones</h3>
-      <div *ngFor="let thread of threads; let i = index" class="thread">
-        <div class="thread-content">
-          <h4>Conversación {{ i + 1 }}</h4>
-          <p>{{ thread.Texto }}</p> <!-- Mostrar el contenido del hilo principal -->
+      <div *ngFor="let thread of threads; let i = index" class="thread colorChanger">
+        <div class="thread-content colorChanger">
+          <h4>{{ thread.Texto }}</h4>
+           <!-- Mostrar el contenido del hilo principal -->
         </div>
   
         <!-- Responder a la conversación -->
-        <div class="responses">
-          <h5>Respuestas</h5>
-          <div *ngFor="let response of respuestas" class="response">
+        <div class="responses colorChanger">
+          <button (click)="cargarRespuestas(thread)">
+            Ver respuestas
+          </button>
+          
+          <div *ngFor="let response of respuestas" class="response colorChanger">
             <div *ngIf="response.PId==thread.idComentario">
             <p>{{ response.Texto }}</p> <!-- Mostrar la respuesta de cada comentario -->
-            <p>{{ response.PId }}</p>
+            
           </div>
           </div>
   
           <!-- Responder a la conversación -->
           <textarea 
+          class="colorChanger"
             [(ngModel)]="texto[thread.idComentario || 1]" 
             placeholder="Escribe tu respuesta...">
           </textarea>

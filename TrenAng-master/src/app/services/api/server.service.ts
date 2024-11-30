@@ -69,4 +69,9 @@ export class ServerService {
   }
 
 
+  uploadFormData(formData: FormData): Observable<any> {
+    const url = 'http://localhost:3000/upload'; 
+    return this.http.post(url, formData);
+  }
+
 }
