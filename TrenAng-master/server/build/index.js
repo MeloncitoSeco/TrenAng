@@ -6,6 +6,14 @@ const { log } = require("console");
 const multer = require('multer');
 const saltRounds = 10; // Define the cost factor for hashing
 const router = express.Router();
+const fs = require('fs');
+const path = require('path');
+
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
+
 
 const app = express();
 
@@ -160,15 +168,25 @@ app.post("/api/users/login", (req, res) => {
 
 
 
-router.post('/upload', upload.single('file'), (req, res) => {
-  const { titulo, descripcion, tren, modelo, ubicacion } = req.body;
+app.post('/upload', upload.single('file'), (req, res) => {
+  
+  const datosSubida = {
+    titulo: req.body.titulo,
+    descripcion: req.body.password,
+    tren: req.body.password,
+    modelo: req.body.password,
+    ubicacion: req.body.ubicacion, 
+    creador: req.body.creador, 
+
+  };
+
   const file = req.file;
 
   if (!file) {
     return res.status(400).json({ error: 'Archivo no subido' });
   }
 
-  console.log('Datos del formulario:', { titulo, descripcion, tren, modelo, ubicacion });
+  console.log('Datos del formulario:', datosSubida.creador,datosSubida.titulo);
   console.log('Archivo subido:', file);
 
   res.status(200).json({ message: 'Formulario recibido con éxito', data: req.body });

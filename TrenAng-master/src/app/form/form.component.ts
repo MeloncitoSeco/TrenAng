@@ -138,6 +138,7 @@ export class FormComponent implements OnInit {
       formData.append('tren', this.secondFormGroup.value.tren);
       formData.append('modelo', this.secondFormGroup.value.modelo);
       formData.append('ubicacion', this.thirdFormGroup.value.ubicacion);
+      formData.append('creador', (sessionStorage.getItem('usuarioNombre'))|| '');
   
       // Verificar que el archivo no sea nulo antes de añadirlo
       if (this.selectedFile) {
