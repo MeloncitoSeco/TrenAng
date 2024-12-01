@@ -105,6 +105,7 @@ export class PublicationsComponent implements OnInit {
 
   onImageError() {
     this.loadedImagesCount++;
+    
     if (this.loadedImagesCount === this.totalImagesCount) {
       this.imagesLoaded.emit();
     }
@@ -112,6 +113,10 @@ export class PublicationsComponent implements OnInit {
 
   trackByPubId(index: number, publicacion: any): number {
     return publicacion.pubId;
+  }
+
+  getImageUrl(imgId: string): string {
+    return `../fotosGuardadas/${imgId}?t=${new Date().getTime()}`;
   }
 
   lastClickedPubId: HTMLElement | null = null;

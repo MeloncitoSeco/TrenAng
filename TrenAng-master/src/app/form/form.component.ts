@@ -117,7 +117,6 @@ export class FormComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      console.log('Archivo seleccionado:', this.selectedFile);
     }
   }
 
@@ -151,7 +150,7 @@ export class FormComponent implements OnInit {
       // Enviar los datos al servidor
       this.serverService.uploadFormData(formData).subscribe({
         next: (response) => {
-          console.log('Formulario enviado con éxito:', response);
+          
         },
         error: (error) => {
           console.error('Error al enviar el formulario:', error);

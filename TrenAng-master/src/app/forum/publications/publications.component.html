@@ -14,7 +14,7 @@
       <div>
         <img
           style="width: 40%"
-          [src]="'fotosGuardadas/' + publicacion.imgId + '.jpg'"
+          [src]="'../fotosGuardadas/' + publicacion.imgId"
           (load)="onImageLoad()"
           (error)="onImageError()"
         />

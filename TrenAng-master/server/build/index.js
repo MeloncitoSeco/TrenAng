@@ -9,7 +9,7 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 
-const uploadsDir = path.join(__dirname, 'uploads');
+const uploadsDir = path.join(__dirname, '../../public/fotosGuardadas');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
 }
@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
 });
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Carpeta donde se guardarán los archivos
+    cb(null, '../../public/fotosGuardadas'); // Carpeta donde se guardarán los archivos
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname); // Nombre único para cada archivo
@@ -169,14 +169,15 @@ app.post("/api/users/login", (req, res) => {
 
 
 app.post('/upload', upload.single('file'), (req, res) => {
-  
+
   const datosSubida = {
-    titulo: req.body.titulo,
-    descripcion: req.body.password,
-    tren: req.body.password,
-    modelo: req.body.password,
-    ubicacion: req.body.ubicacion, 
-    creador: req.body.creador, 
+    titulo: req.body.titulo,      //pub.titulo              v
+    texto: req.body.descripcion,  //pub.texto               v
+    tren: req.body.tren,          //tipoTren.tipoTren       v
+    modelo: req.body.modelo,      //tren.modelo             v
+    ubicacion: req.body.ubicacion,  //pub.comAuto             v
+    creador: req.body.creador,    //usu.name                email
+    //pub.pubId               pubId
 
   };
 
@@ -186,11 +187,90 @@ app.post('/upload', upload.single('file'), (req, res) => {
     return res.status(400).json({ error: 'Archivo no subido' });
   }
 
-  console.log('Datos del formulario:', datosSubida.creador,datosSubida.titulo);
-  console.log('Archivo subido:', file);
+  console.log('Datos del formulario modelo:', datosSubida.modelo, 'Tren:', datosSubida.tren);
 
-  res.status(200).json({ message: 'Formulario recibido con éxito', data: req.body });
+  // Obtener el email del usuario
+  const queryGetUser = `SELECT email FROM usuario WHERE name = ?`;
+  conection.query(queryGetUser, [datosSubida.creador], (err, result) => {
+    if (err) {
+      console.log(err.message);
+      return res.status(500).json({ error: "Error al obtener el usuario" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const email = result[0].email;
+
+    // Obtener el máximo pubId
+    const queryMaxPubId = 'SELECT MAX(pubId) AS pubId FROM publicacion';
+    conection.query(queryMaxPubId, (err, result) => {
+      if (err) {
+        console.log(err.message);
+        return res.status(500).json({ error: "Error al obtener pubId" });
+      }
+
+      let pubId = result[0].pubId || 0; // Si no hay publicaciones, comenzar con 1
+      pubId += 1;
+
+      console.log('New pubId:', pubId);
+
+
+      const querygetTrenId = 'select max(trenId) as trenId from Tren;'; 
+      conection.query(querygetTrenId, [email, pubId], (err, result) => {
+        if (err) {
+          console.log(err.message);
+          return res.status(500).json({ error: "Error obtener ultimo tren id" });
+        }
+
+        let trenId = result[0].trenId || 0; // Si no hay publicaciones, comenzar con 1
+        trenId += 1;
+        console.log('Tren id new' , trenId, ' modelo', datosSubida.modelo, ' tipotren ', datosSubida.tren);
+
+        const queryInsertTren = 'INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`) VALUES     (?, ?, ?)'; // TODO mal
+        conection.query(queryInsertTren, [trenId, datosSubida.modelo, datosSubida.tren], (err, result) => {
+          if (err) {
+            console.log(err.message);
+            return res.status(500).json({ error: "Error al insertar en Tren" });
+          }
+          console.log('Ubicacion: ' , datosSubida.ubicacion)
+          const queryInsertPub = 'INSERT INTO `fotoTren`.`Publicacion` (`email`, `trenId`, `titulo`, `comAuto`, `texto`) VALUES (?,?,?,?,?)'; // TODO mal
+          conection.query(queryInsertPub, [email, trenId,datosSubida.titulo,datosSubida.ubicacion,datosSubida.texto], (err, result) => {
+            if (err) {
+              console.log(err.message);
+              return res.status(500).json({ error: "Error al insertar en Publicacion" });
+            }
+
+
+
+
+
+
+            // Insertar en la tabla Imagen
+            const queryInImagen = `INSERT INTO Imagen (imgId, pubId) VALUES (?, ?)`;
+            conection.query(queryInImagen, [file.filename, pubId], (err, result) => {
+              if (err) {
+                console.log(err.message);
+                return res.status(500).json({ error: "Error al insertar en Imagen" });
+              }
+
+              console.log('Imagen insertada correctamente');
+              res.status(200).json({
+                message: 'Formulario procesado correctamente',
+                pubId,
+                email,
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 });
+
+
+
 
 module.exports = router;
 
@@ -285,7 +365,7 @@ app.delete("/api/publications/delete/:pubId", (req, res) => {
 app.get("/api/foroConversaciones", (req, res) => {
   const { pubId } = req.params;
   const query = `SELECT * FROM Foro where PId IS null `;
-  
+
   conection.query(query, (err, result) => {
     if (err) return console.log(err.message);
 
@@ -301,7 +381,7 @@ app.get("/api/foroConversaciones", (req, res) => {
 app.get("/api/foroConversaciones/:PId", (req, res) => {
   const { PId } = req.params;
   const query = `SELECT * FROM Foro WHERE PId = ${PId}`;
-  
+
   conection.query(query, (err, result) => {
     if (err) return console.log(err.message);
 
@@ -329,9 +409,9 @@ app.post("/api/foroConversaciones/comentar", (req, res) => {
 });
 
 app.post("/api/foroConversaciones/nuevoTema", (req, res) => {
-  const {  Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
+  const { Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
   const query = `INSERT INTO Foro (PId, Creador, Texto) VALUES (null, ?, ?)`; // Especificar columnas y usar marcadores
-  conection.query(query, [ Creador, Texto], (err, result) => { // Pasar los valores como un arreglo
+  conection.query(query, [Creador, Texto], (err, result) => { // Pasar los valores como un arreglo
     if (err) {
       console.log(err.message);
       return res.status(500).json({ error: err.message });
@@ -342,4 +422,26 @@ app.post("/api/foroConversaciones/nuevoTema", (req, res) => {
 app.use((req, res, next) => {
   console.log(`Solicitud recibida: ${req.method} ${req.url}`);
   next();
+});
+
+
+
+app.post('/api/getImage', (req, res) => {
+  const { imageName } = req.body.imageName;
+
+  if (!imageName) {
+    return res.status(400).json({ error: 'El nombre de la imagen es obligatorio' });
+  }
+
+  // Ruta completa de la imagen
+  const imagePath = path.join(__dirname, '../../public/fotosGuardadas', imageName);
+
+  // Verifica si la imagen existe
+  if (!fs.existsSync(imagePath)) {
+    return res.status(404).json({ error: 'Imagen no encontrada' });
+  }
+
+  // Configurar el tipo MIME y enviar la imagen
+  res.setHeader('Content-Type', 'image/*'); 
+  res.sendFile(imagePath);
 });
