@@ -15,6 +15,10 @@ export class PublicationsComponent implements OnInit {
   publications: any[] = [];
 
   constructor(@Inject(ServerService) private serverService: ServerService) {}
+  
+  ngOnDestroy() {
+    this.removeClonedCard();
+  }
 
   ngOnInit(): void {
     this.serverService.getPublications().subscribe(
@@ -97,6 +101,7 @@ export class PublicationsComponent implements OnInit {
   @Output() imagesLoaded = new EventEmitter<void>();
 
   onImageLoad() {
+    
     this.loadedImagesCount++;
     if (this.loadedImagesCount === this.totalImagesCount) {
       this.imagesLoaded.emit();

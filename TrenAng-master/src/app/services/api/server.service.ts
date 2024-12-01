@@ -74,4 +74,9 @@ export class ServerService {
     return this.http.post(url, formData);
   }
 
+
+  getImage(imageName: string) {
+    return this.http.post('http://localhost:3000/api/getImage', { imageName }, { responseType: 'blob' });
+  }
+
 }

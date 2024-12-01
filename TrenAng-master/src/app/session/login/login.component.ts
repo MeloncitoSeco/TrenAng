@@ -60,6 +60,8 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('Cuenta', 'true');
           sessionStorage.setItem('usuarioNombre', data.name); // Almacenar el nombre del usuario
           console.log('Nombre del usuario:', sessionStorage.getItem('usuarioNombre'));
+          
+
         },
         (error) => {
           this.loginError = 'Error al iniciar sesión: ' + (error?.error || error?.message || 'Error desconocido');

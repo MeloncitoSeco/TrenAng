@@ -40,13 +40,18 @@ export class DiscusionComponent implements OnInit {
           this.router.navigate(['/login']); // Redirigir al login
         }
       } else {
+        this.router.navigate(['/home']);
         console.warn('sessionStorage no está disponible fuera del navegador.');
       }
     } catch (error) {
-      console.error('Se produjo un error al acceder a sessionStorage:', error);
+      const typedError = error as Error; // Forzar a que sea de tipo Error
+      console.error('Error en DiscusionComponent:', typedError.message);
+
+      if (typedError.message.includes('NG0500')) {
+        this.router.navigate(['/home']);
+      }
     }
   }
-
   // Cargar todas las conversaciones principales (PId = null)
   cargarConversaciones() {
     this.serverService.getConversaiones().subscribe(

@@ -2,28 +2,20 @@
   <!-- Comprobamos si hay publicaciones -->
   <div *ngIf="publications && publications.length > 0; else noPublicaciones">
     <!-- Iteramos sobre las publicaciones -->
-    <div
-      *ngFor="let publicacion of publications; trackBy: trackByPubId"
-      class="card colorChanger"
-      [ngClass]="{ expanded: expandedPubId === publicacion.pubId }"
-      (click)="expandDiv(publicacion.pubId, $event)"
-    >
+    <div *ngFor="let publicacion of publications; trackBy: trackByPubId" class="card colorChanger"
+      [ngClass]="{ expanded: expandedPubId === publicacion.pubId }" (click)="expandDiv(publicacion.pubId, $event)">
       <div>
         <h1>{{ publicacion.titulo }}</h1>
       </div>
       <div>
-        <img
-          style="width: 40%"
-          [src]="'../fotosGuardadas/' + publicacion.imgId"
-          (load)="onImageLoad()"
-          (error)="onImageError()"
-        />
+        <img style="width: 50%" [src]="'http://localhost:3000/api/getImage' + '?imageName=' + publicacion.imgId"
+          (load)="onImageLoad()" (error)="onImageError()" />
       </div>
-      <div class="truncateText" [ngClass]="{ expanded: expandedPubId === publicacion.pubId }" >
-        
-          <p>{{ publicacion.fechaCrea | date: 'medium' }}</p>
+      <div class="truncateText" [ngClass]="{ expanded: expandedPubId === publicacion.pubId }">
+
+        <p>{{ publicacion.fechaCrea | date: 'medium' }}</p>
         <p>{{ publicacion.texto }}</p>
-        
+
       </div>
     </div>
   </div>

@@ -426,8 +426,8 @@ app.use((req, res, next) => {
 
 
 
-app.post('/api/getImage', (req, res) => {
-  const { imageName } = req.body.imageName;
+app.get('/api/getImage', (req, res) => {
+  const imageName = req.query.imageName;
 
   if (!imageName) {
     return res.status(400).json({ error: 'El nombre de la imagen es obligatorio' });
