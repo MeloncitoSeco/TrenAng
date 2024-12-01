@@ -4,12 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { Foro } from '../../../clases/foro/foro';
 import { ServerService } from '../../../services/api/server.service';
 import { Router } from '@angular/router';
-
+import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
   selector: 'app-discusion',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, 
+    CommonModule,
+    MatDividerModule
+  ],
   templateUrl: './discusion.component.html',
   styleUrl: './discusion.component.scss'
 })

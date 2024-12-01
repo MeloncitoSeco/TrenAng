@@ -4,6 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ServerService } from '../../services/api/server.service';
 import { Usuario } from '../../clases/usuario/usuario';
+import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-login',
@@ -23,8 +26,12 @@ export class LoginComponent implements OnInit {
   nombreUser:Usuario[]=[];
   loginError: string | null = null;
   signupError: string | null = null;
+ 
 
-  constructor(private fb: FormBuilder, @Inject(ServerService) private serverService: ServerService) {}
+  constructor(private fb: FormBuilder, 
+    @Inject(ServerService) 
+    private serverService: ServerService,
+    private router: Router,) {}
 
   ngOnInit() {
     // Aseguramos que sessionStorage esté correctamente inicializado solo en el navegador
@@ -60,16 +67,18 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('Cuenta', 'true');
           sessionStorage.setItem('usuarioNombre', data.name); // Almacenar el nombre del usuario
           console.log('Nombre del usuario:', sessionStorage.getItem('usuarioNombre'));
-          
+          this.router.navigate(['/home']);
 
         },
         (error) => {
           this.loginError = 'Error al iniciar sesión: ' + (error?.error || error?.message || 'Error desconocido');
           console.error('Error al iniciar sesión:', error);
+          this.openSnackBar('Error al iniciar sesion','Cerrar');
         }
       );
     } else {
       console.warn('Formulario de inicio de sesión inválido');
+      this.openSnackBar('Error al iniciar sesion','Cerrar');
     }
   }
   crearCuenta() {
@@ -82,15 +91,24 @@ export class LoginComponent implements OnInit {
           console.log('Cuenta creada exitosamente:', this.respuesta);
           sessionStorage.setItem('Cuenta', 'true');
           sessionStorage.setItem('usuarioNombre', data.name);
+          this.router.navigate(['/home']);
           
         },
         (error) => {
           this.signupError = 'Error al crear cuenta: ' + (error.error || error.message);
           console.error('Error al crear cuenta:', error);
+          this.openSnackBar('Error al crear cuenta','Cerrar');
         }
       );
     } else {
       console.warn('Formulario de registro inválido');
+      this.openSnackBar('Error al crear cuenta','Cerrar');
     }
   }
+  private _snackBar = inject(MatSnackBar);
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
 }
