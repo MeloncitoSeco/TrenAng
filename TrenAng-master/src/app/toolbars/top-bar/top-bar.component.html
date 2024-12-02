@@ -11,11 +11,7 @@
 
   <app-theme-changer/>
 
-  <button 
-    mat-icon-button 
-    class="colorChangerIcons" >
-    <mat-icon>favorite</mat-icon>
-  </button>
+  
 
   <button
     mat-icon-button
@@ -28,8 +24,17 @@
   <button
     mat-icon-button
     class="colorChangerIcons"
+    (click)="copyUrlToClipboard()"
   >
     <mat-icon>share</mat-icon>
   </button>
+
+  <!-- Popup de confirmación -->
+  <div
+    *ngIf="showCopiedPopup"
+    class="popup"
+  >
+    Ruta copiada al portapapeles
+  </div>
 
 </mat-toolbar>

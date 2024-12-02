@@ -1,41 +1,44 @@
 <div class="forum-container colorChanger">
     <!-- Crear nueva conversación -->
-    <div class="new-thread colorChanger">
-      <h3>Iniciar una nueva conversación</h3>
+    <div class="new-thread colorChanger" >
+      <h3 style="text-align: center;">Iniciar una nueva conversación</h3>
       <textarea class="colorChanger"
         [(ngModel)]="newThreadContent" 
         placeholder="Escribe un tema para la conversación...">
       </textarea>
-      <button (click)="crearNuevaConversacion()">Publicar</button>
+      <button  (click)="crearNuevaConversacion()">Publicar</button>
     </div>
   
     <hr />
   
     <!-- Listar conversaciones -->
     <div class="threads colorChanger">
-      <h3>Conversaciones</h3>
+      <h3 style="text-align: center;">Conversaciones</h3>
       <div *ngFor="let thread of threads; let i = index" class="thread colorChanger">
         <div class="thread-content colorChanger">
           <h4>{{ thread.Texto }}</h4>
-           <!-- Mostrar el contenido del hilo principal -->
         </div>
-  
+    
         <!-- Responder a la conversación -->
         <div class="responses colorChanger">
-          <button (click)="cargarRespuestas(thread)">
+          <!-- Mostrar botón solo si las respuestas no están visibles -->
+          <button *ngIf="expandedThreadId !== thread.idComentario" 
+                  (click)="cargarRespuestas(thread)">
             Ver respuestas
           </button>
-          
+    
+          <!-- Mostrar respuestas -->
           <div *ngFor="let response of respuestas" class="response colorChanger">
-            <div *ngIf="response.PId==thread.idComentario">
-            <p>{{ response.Texto }}</p> <!-- Mostrar la respuesta de cada comentario -->
-            <mat-divider></mat-divider>
+            <div *ngIf="response.PId == thread.idComentario">
+              <p>{{ response.Texto }}</p>
+              <p style="text-align: end;">{{response.Creador}}</p>
+              <mat-divider></mat-divider>
+            </div>
           </div>
-          </div>
-  
+    
           <!-- Responder a la conversación -->
           <textarea 
-          class="colorChanger"
+            class="colorChanger"
             [(ngModel)]="texto[thread.idComentario || 1]" 
             placeholder="Escribe tu respuesta...">
           </textarea>
@@ -45,4 +48,3 @@
         </div>
       </div>
     </div>
-  </div>

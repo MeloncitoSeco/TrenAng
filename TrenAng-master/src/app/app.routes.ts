@@ -6,6 +6,7 @@ import { FormComponent } from './form/form.component';
 import { LoginComponent } from './session/login/login.component';
 import { DiscusionComponent } from './forum/discusiones/discusion/discusion.component';
 import { CloseSessionComponent } from './session/closeSession/close-session/close-session.component';
+import { ChangePasswordComponent } from './session/change-password/change-password.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -16,5 +17,6 @@ export const routes: Routes = [
     {path: 'login', component:LoginComponent },
     {path: 'foro',component:DiscusionComponent },
     {path: 'close', component:CloseSessionComponent},
+    {path: 'cuenta', component:ChangePasswordComponent},
     {path: '**', redirectTo: '/home' }
 ];

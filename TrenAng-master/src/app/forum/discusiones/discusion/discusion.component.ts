@@ -23,6 +23,7 @@ export class DiscusionComponent implements OnInit {
   texto: { [key: number]: string } = {}; // Objeto para almacenar respuestas por idComentario
   pId: number | null = null; // ID del hilo actual
   idComentario: number | null = null; // ID del comentario actual
+  expandedThreadId: number | null = null; // ID del hilo con respuestas visibles
 
   constructor(private serverService: ServerService,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -115,13 +116,20 @@ export class DiscusionComponent implements OnInit {
 
   // Cargar respuestas para un hilo específico
   cargarRespuestas(thread: Foro) {
-    this.serverService.getRespuestas(thread.idComentario || 0).subscribe(
-      (data: Foro[]) => {
-        this.respuestas = data; // Agregar respuestas al hilo
-      },
-      (error) => {
-        console.error('Error al cargar respuestas:', error);
-      }
-    );
+    // Si el hilo ya está expandido, cerramos las respuestas
+    if (this.expandedThreadId === thread.idComentario) {
+      this.respuestas = [];
+      this.expandedThreadId = null; // Ocultar las respuestas
+    } else {
+      this.serverService.getRespuestas(thread.idComentario || 0).subscribe(
+        (data: Foro[]) => {
+          this.respuestas = data; // Agregar respuestas al hilo
+          this.expandedThreadId = thread.idComentario; // Marcar el hilo como expandido
+        },
+        (error) => {
+          console.error('Error al cargar respuestas:', error);
+        }
+      );
+    }
   }
 }
