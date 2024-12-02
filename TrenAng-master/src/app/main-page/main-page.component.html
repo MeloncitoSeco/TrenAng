@@ -1,20 +1,20 @@
 <div class="content " style="padding: 10px;">
-  <mat-grid-list cols="4" rowHeight="100px" >
+  <mat-grid-list cols="4" rowHeight="100px">
     <mat-grid-tile [colspan]="3" [rowspan]="2" class="colorChanger">
       <h2 class="colorChangerTextNoBg">
         Ultimas noticias ferroviarias
       </h2>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="1" [rowspan]="1" >
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
       <h4 class="colorChangerTextNoBg">Nuevos modelos</h4>
       <ul>
 
       </ul>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="7"  class="colorChanger">
+    <mat-grid-tile [colspan]="1" [rowspan]="7" class="colorChanger">
 
-      
+
       <mat-list>
         <mat-list-item *ngFor="let tren of trenesNuevos" class="colorChangerTextNoBg">
           <span matListItemTitle class="colorChangerTextNoBg">{{ tren.modelo }}</span>
@@ -24,30 +24,35 @@
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="1" [rowspan]="4" class="colorChanger">
-      <div >
-      <h6>¿Seguirá siendo gratis el Cercanías en 2025?</h6>
-      <p>Estos son los nuevos precios de Renfe sin los descuentos</p>
-      <img src="https://imagenes.20minutos.es/files/image_990_556/uploads/imagenes/2024/10/29/tren-cercanias.jpeg" style="width : 70%;">
-      
-    </div>
-      
+      <div>
+        <h6>¿Seguirá siendo gratis el Cercanías en 2025?</h6>
+        <p>Estos son los nuevos precios de Renfe sin los descuentos</p>
+        <img src="https://imagenes.20minutos.es/files/image_990_556/uploads/imagenes/2024/10/29/tren-cercanias.jpeg"
+          style="width : 70%;">
+
+      </div>
+
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="2" [rowspan]="6" class="colorChanger">
-      <div style="justify-content: center;" >
+      <div style="justify-content: center;">
         <h6>Finalizado el primer tren de hidrógeno</h6>
-        <p>El acto final del proyecto FCH2RAIL se ha celebrado en el marco del congreso RailLive 2024, que ha tenido lugar los dos últimos días en la ciudad de Zaragoza. Durante los últimos cuatro años, el proyecto ha desarrollado un tren de demostración bimodal con pilas de combustible de hidrógeno y lo ha probado en las redes ferroviarias española y portuguesa.</p>
-        <img src="https://www.ace-cargadores.com/wp-content/uploads/2024/12/02-12-2024-PROYECTO-FINALIZADO.jpg" style="border-radius: 20px; width: 60%;" >
+        <p>El acto final del proyecto FCH2RAIL se ha celebrado en el marco del congreso RailLive 2024, que ha tenido
+          lugar los dos últimos días en la ciudad de Zaragoza. Durante los últimos cuatro años, el proyecto ha
+          desarrollado un tren de demostración bimodal con pilas de combustible de hidrógeno y lo ha probado en las
+          redes ferroviarias española y portuguesa.</p>
+        <img src="https://www.ace-cargadores.com/wp-content/uploads/2024/12/02-12-2024-PROYECTO-FINALIZADO.jpg"
+          style="border-radius: 20px; width: 60%;">
       </div>
 
-      
+
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2" class="colorChanger">
       <h5>
         Animate a escribir en el foro
       </h5>
 
-      
+
     </mat-grid-tile>
 
   </mat-grid-list>

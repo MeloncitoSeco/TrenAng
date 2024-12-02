@@ -8,6 +8,7 @@ const saltRounds = 10; // Define the cost factor for hashing
 const router = express.Router();
 const fs = require('fs');
 const path = require('path');
+const { ok } = require("assert");
 
 const uploadsDir = path.join(__dirname, '../../public/fotosGuardadas');
 if (!fs.existsSync(uploadsDir)) {
@@ -447,4 +448,70 @@ app.get('/api/getImage', (req, res) => {
   // Configurar el tipo MIME y enviar la imagen
   res.setHeader('Content-Type', 'image/*'); 
   res.sendFile(imagePath);
+});
+
+
+
+app.post("/api/cuenta/cambiarContra", (req, res) => {
+  const { Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
+  const cambio = {
+    usuario: req.body.usuario,
+    contraAntigua: req.body.contraAntigua,
+    contraNueva: req.body.contraNueva,
+  };
+
+ 
+  const checker = `SELECT password FROM Usuario WHERE name = ?`;
+
+  // Verificar si el usuario existe y validar la contraseña
+  conection.query(checker, [cambio.usuario], (err, result) => {
+    if (err) {
+      console.log(err.message);
+      return res.status(500).json("Error en la base de datos");
+    }
+
+    if (result.length > 0) {
+      const hashedPassword = result[0].password;
+
+      // Comparar la contraseña proporcionada con la almacenada
+      bcrypt.compare(usuario.contra, hashedPassword, (err, isMatch) => {
+        if (err) {
+          console.log(err.message);
+          return res.status(500).json("Error en la comparación de contraseñas");
+        }
+
+        if (isMatch) {
+          bcrypt.hash(cambio.contraNueva, saltRounds, (err, hashedPassword) => {
+            if (err) {
+              console.log(err.message);
+              return res.status(500).json("Error al hashear la contraseña");
+            }
+    
+            // Reemplazar la contraseña en claro con la contraseña hasheada
+            cambio.contraAntigua = hashedPassword;
+    
+            // Insertar el nuevo usuario en la base de datos
+            const insertQuery = "update Usuario set password = ? where name = ?";
+            conection.query(insertQuery, cambio.usuario,cambio.contraNueva, (err, result) => {
+              if (err) {
+                console.log(err.message);
+                return res.status(500).json("Error al insertar el usuario");
+              }
+    
+              // Devolver el nombre del usuario después de crearlo
+             res.status(ok);
+            });
+          });
+          
+          
+        } else {
+          // La contraseña no coincide
+          res.status(401).json("Contraseña incorrecta");
+        }
+      });
+    } else {
+      // El usuario no fue encontrado
+      res.status(404).json("Usuario no encontrado");
+    }
+  });
 });
