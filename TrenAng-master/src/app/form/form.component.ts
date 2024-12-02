@@ -59,7 +59,7 @@ export class FormComponent implements OnInit {
     // Form groups with validations
     this.firstFormGroup = this.formBuilder.group({
       titulo: ['', [Validators.required, Validators.minLength(5)]],
-      descripcion: ['', [Validators.required, Validators.maxLength(255)]],
+      descripcion: ['', [Validators.required, Validators.maxLength(1000)]],
     });
 
     this.secondFormGroup = this.formBuilder.group({
