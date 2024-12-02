@@ -120,9 +120,7 @@ export class PublicationsComponent implements OnInit {
     return publicacion.pubId;
   }
 
-  getImageUrl(imgId: string): string {
-    return `../fotosGuardadas/${imgId}?t=${new Date().getTime()}`;
-  }
+  
 
   lastClickedPubId: HTMLElement | null = null;
   firsTime = true;

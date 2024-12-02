@@ -12,10 +12,12 @@
           (load)="onImageLoad()" (error)="onImageError()" />
       </div>
       <div class="truncateText" [ngClass]="{ expanded: expandedPubId === publicacion.pubId }">
-
-        <p>{{ publicacion.fechaCrea | date: 'medium' }}</p>
+         
+        <h6>Modelo {{publicacion.modelo}}, {{publicacion.tipoTren}}</h6>
         <p>{{ publicacion.texto }}</p>
-
+        <h5>Subido por {{publicacion.nombreUsuario}}</h5>
+        <p>Foto tomada en {{publicacion.comAuto}}</p>
+        <p>{{ publicacion.fechaCrea | date: 'medium' }}</p>
       </div>
     </div>
   </div>

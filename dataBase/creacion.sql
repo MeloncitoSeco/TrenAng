@@ -77,7 +77,6 @@ CREATE TABLE IF NOT EXISTS `fotoTren`.`Tren` (
   `trenId` INT(11) NOT NULL,
   `modelo` VARCHAR(24) NOT NULL,
   `tipoTren` INT(11) NOT NULL,
-  `fechaFabricacion` INT(11) NOT NULL,
   PRIMARY KEY (`trenId`),
   INDEX `tren-tipo_idx` (`tipoTren` ASC) ,
   CONSTRAINT `tren-tipo`
@@ -97,7 +96,6 @@ CREATE TABLE IF NOT EXISTS `fotoTren`.`Publicacion` (
   `email` VARCHAR(255) NOT NULL,
   `trenId` INT(11) NOT NULL,
   `titulo` VARCHAR(120) NOT NULL,
-  `posicion` VARCHAR(45) NOT NULL,
   `comAuto` VARCHAR(45) NOT NULL,
   `fechaCrea` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `texto` VARCHAR(2000) NULL DEFAULT NULL,
@@ -122,20 +120,20 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `fotoTren`.`imagen`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fotoTren`.`Imagen` (
-  `imgId` INT(11) NOT NULL AUTO_INCREMENT,
-  `fecha` DATETIME NOT NULL,
+CREATE TABLE IF NOT EXISTS `fototren`.`imagen` (
+  `imgId` VARCHAR(255) NOT NULL,
+  `fecha` DATETIME null default null,
   `pubId` INT(11) NOT NULL,
   PRIMARY KEY (`imgId`),
   INDEX `img-pub_idx` (`pubId` ASC) ,
   CONSTRAINT `img-pub`
     FOREIGN KEY (`pubId`)
-    REFERENCES `fotoTren`.`Publicacion` (`pubId`)
+    REFERENCES `fototren`.`publicacion` (`pubId`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -169,13 +167,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`, `fechaFabricacion`) 
+INSERT INTO `fotoTren`.`Tren` (`trenId`, `modelo`, `tipoTren`) 
 VALUES 
-    (1, 'Civia', 8, 2003),
-    (2, 'IRYO', 4, 2020),
-    (3, 'Alvia S-120', 2, 2015),
-    (4, 'Ave S-103', 1, 2010),
-    (5, 'Avant S-104', 3, 2018);
+    (1, 'Civia', 8),
+    (2, 'IRYO', 4),
+    (3, 'Alvia S-120', 2),
+    (4, 'Ave S-103', 1),
+    (5, 'Avant S-104', 3);
 
 
 COMMIT;
@@ -191,6 +189,8 @@ VALUES
     ('Santiago', 'santiago@gmail.com', 'password123'),
     ('Miriam', 'miriam@gmail.com', 'mypass2024'),
     ('Carlos', 'carlos@example.com', 'trainlover'),
+    ('pepe', 'pepe@gmail.com',  '$2b$10$VtGJkvvhK5eKTx2aSeMk6ux9gJXqBv7xkOTvbZ.HRuUUoUlNQ2SH2'),
+   
     ('Elena', 'elena@example.com', 'password456');
 
 COMMIT;
@@ -201,12 +201,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`Publicacion` (`email`, `trenId`, `titulo`, `posicion`, `comAuto`, `texto`) 
+INSERT INTO `fotoTren`.`Publicacion` (`email`, `trenId`, `titulo`, `comAuto`, `texto`) 
 VALUES 
-    ('santiago@gmail.com', 1, 'Civia en Andalucía', 'Quieto', 'Andalucía', 'Hermosa mañana para una foto de este tren.'),
-    ('carlos@example.com', 2, 'IRYO desde Navarra', 'Moviendo', 'Navarra', 'Un gran tren para un viaje inolvidable.'),
-    ('miriam@gmail.com', 3, 'Alvia en Cataluña', 'Moviendo', 'Cataluña', 'Impresionante velocidad capturada.'),
-    ('elena@example.com', 4, 'Ave por Madrid', 'Quieto', 'Madrid', 'Una vista increíble del Ave en el andén.');
+    ('santiago@gmail.com', 1, 'Civia en Andalucía', 'Andalucía', 'Hermosa mañana para una foto de este tren.'),
+    ('carlos@example.com', 2, 'IRYO desde Navarra', 'Navarra', 'Un gran tren para un viaje inolvidable.'),
+    ('miriam@gmail.com', 3, 'Alvia en Cataluña',  'Cataluña', 'Impresionante velocidad capturada.'),
+    ('elena@example.com', 4, 'Ave por Madrid',  'Madrid', 'Una vista increíble del Ave en el andén.');
 
 
 COMMIT;
@@ -217,18 +217,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fotoTren`;
-INSERT INTO `fotoTren`.`Imagen` (`fecha`, `pubId`) 
+INSERT INTO `fotoTren`.`Imagen` (`imgId`,`fecha`, `pubId`) 
 VALUES 
-    ('2024-10-16 10:30:00', 1),
-    ('2024-10-16 11:00:00', 1),
-    ('2024-10-16 12:15:00', 2),
-    ('2024-10-16 13:20:00', 2),
-    ('2024-10-16 14:25:00', 3),
-    ('2024-10-16 15:30:00', 3),
-    ('2024-10-16 16:45:00', 2),
-    ('2024-10-16 17:50:00', 2),
-    ('2024-10-16 18:55:00', 1),
-    ('2024-10-16 19:10:00', 2);
+    ('1733004564050-RESULTADO1.png','2024-10-16 10:30:00', 1);
+    
 
 
 

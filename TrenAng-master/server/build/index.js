@@ -277,7 +277,10 @@ module.exports = router;
 
 
 app.get("/api/publications", (req, res) => {
-  const query = "select * from Imagen as img join Publicacion as pub on img.pubId=pub.pubId group by pub.pubId  ;";
+  
+  const query = "select img.imgId, pub.pubId, pub.titulo, pub.comAuto, pub.fechaCrea, pub.texto, tren.modelo, tip.name as tipoTren, usu.name as nombreUsuario  from Imagen as img join Publicacion as pub on img.pubId=pub.pubId join Tren as tren on tren.trenId=pub.trenId join tipoTren as tip on tip.tipoTren=tren.tipoTren join Usuario as usu on usu.email=pub.email;";
+//  const query = "select * from Imagen as img join Publicacion as pub on img.pubId=pub.pubId group by pub.pubId  ;";
+
   conection.query(query, (err, result) => {
     if (err) console.log(err.message);
 

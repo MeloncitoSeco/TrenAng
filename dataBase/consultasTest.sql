@@ -15,5 +15,10 @@ select * from Imagen as img join Publicacion as pub on img.pubId=pub.pubId where
 
 select * from Imagen as img join Publicacion as pub on img.pubId=pub.pubId  ;
 
+select email from usuario as usu where usu.name =  'Carlos';
+select max(pubId) from publicacion;
+
+select max(trenId) as trenId from tren;
+
 
 
