@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { Router } from '@angular/router';
+import { ServerService } from '../../services/api/server.service';
 
 
 @Component({
@@ -17,10 +18,15 @@ import { Router } from '@angular/router';
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent {
+export class ChangePasswordComponent implements OnInit{
   passwordForm: FormGroup;
+  usuario : string = '';
 
-  constructor(private fb: FormBuilder, private router : Router) {
+  constructor(private fb: FormBuilder, 
+    private router : Router,
+    @Inject(ServerService) 
+    private serverService: ServerService,
+  ) {
     // Inicializar el formulario
     this.passwordForm = this.fb.group({
       currentPassword: ['', Validators.required],
@@ -29,6 +35,18 @@ export class ChangePasswordComponent {
     }, {
       validators: this.passwordsMatchValidator
     });
+  }
+
+
+  ngOnInit(): void {
+    if (typeof window !== 'undefined' && sessionStorage) {
+      if ('' == sessionStorage.getItem('usuarioNombre')) {
+        console.log('No hay usuario',sessionStorage.getItem('usuarioNombre'));
+        this.router.navigate(['/login']);
+      }else{
+        this.usuario= (sessionStorage.getItem('usuarioNombre'))|| '';
+      }
+    }
   }
 
   // Validar si las contraseñas coinciden
@@ -50,11 +68,19 @@ export class ChangePasswordComponent {
     if (this.passwordForm.valid) {
       const { currentPassword, newPassword } = this.passwordForm.value;
 
-      // Aquí llamarías a un servicio para cambiar la contraseña
-      console.log('Contraseña actual:', currentPassword);
-      console.log('Nueva contraseña:', newPassword);
 
-      alert('¡Contraseña cambiada exitosamente!');
+      this.serverService.updatePassword(this.usuario, currentPassword, newPassword).subscribe({
+        next: (response) => {
+          console.log('Respuesta del servidor:', response);
+          alert('¡Contraseña cambiada exitosamente!');
+        },
+        error: (error) => {
+          console.error('Error al cambiar la contraseña:', error);
+          alert('Hubo un problema al cambiar la contraseña.');
+        }
+      });
+    } else {
+      console.log('Formulario inválido');
     }
   }
 

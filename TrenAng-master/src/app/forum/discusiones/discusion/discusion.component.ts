@@ -35,11 +35,11 @@ export class DiscusionComponent implements OnInit {
       // Verificar si estamos en el navegador
       if (isPlatformBrowser(this.platformId)) {
         const valor: string | null = sessionStorage.getItem('usuarioNombre');
-        console.log(valor)
+        
 
         if (valor) {
           this.cargarConversaciones(); // Cargar las conversaciones al iniciar
-          console.log('estas son las variables' + (sessionStorage.getItem('usuarioNombre')));
+          
         } else {
           this.router.navigate(['/login']); // Redirigir al login
         }

@@ -24,7 +24,7 @@ export class PublicationsComponent implements OnInit {
     this.serverService.getPublications().subscribe(
       (data) => {
         this.publications = data;
-        console.log(this.publications);
+        
       },
       (error) => {
         console.error('Error al obtener publicaciones', error);

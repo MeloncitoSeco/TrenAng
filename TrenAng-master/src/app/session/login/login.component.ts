@@ -37,9 +37,8 @@ export class LoginComponent implements OnInit {
     // Aseguramos que sessionStorage esté correctamente inicializado solo en el navegador
     
     if (typeof window !== 'undefined' && sessionStorage) {
-      console.log(sessionStorage.getItem('Cuenta') , sessionStorage.getItem('usuarioNombre'));
+      
       if ('true' != sessionStorage.getItem('Cuenta')) {
-        console.log('No hay cuenta',sessionStorage.getItem('Cuenta'));
         sessionStorage.setItem('Cuenta', 'false');
       }else{
         this.router.navigate(['/cuenta']);

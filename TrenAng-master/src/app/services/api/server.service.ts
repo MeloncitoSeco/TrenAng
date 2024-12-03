@@ -15,7 +15,6 @@ export class ServerService {
 
   // Obtener todas las publicaciones (GET)
   getPublications(): Observable<any> {
-    console.log(this.apiUrl);
     return this.http.get(this.apiUrl);
   }
 
@@ -74,7 +73,11 @@ export class ServerService {
     return this.http.post(url, formData);
   }
 
+  updatePassword(usuario: string, contraAntigua:string, contraNueva:string ){
+    return this.http.post('http://localhost:3000/api/cuenta/cambiarContra',{usuario,contraAntigua,contraNueva});
 
+  }
+  
   getImage(imageName: string) {
     return this.http.post('http://localhost:3000/api/getImage', { imageName }, { responseType: 'blob' });
   }

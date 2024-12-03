@@ -150,7 +150,7 @@ export class FormComponent implements OnInit {
       // Enviar los datos al servidor
       this.serverService.uploadFormData(formData).subscribe({
         next: (response) => {
-          
+          this.router.navigate(['/publications']);
         },
         error: (error) => {
           console.error('Error al enviar el formulario:', error);

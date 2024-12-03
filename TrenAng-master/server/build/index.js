@@ -453,7 +453,6 @@ app.get('/api/getImage', (req, res) => {
 
 
 app.post("/api/cuenta/cambiarContra", (req, res) => {
-  const { Creador, Texto } = req.body; // Extraer valores del cuerpo de la solicitud
   const cambio = {
     usuario: req.body.usuario,
     contraAntigua: req.body.contraAntigua,
@@ -474,14 +473,14 @@ app.post("/api/cuenta/cambiarContra", (req, res) => {
       const hashedPassword = result[0].password;
 
       // Comparar la contraseña proporcionada con la almacenada
-      bcrypt.compare(usuario.contra, hashedPassword, (err, isMatch) => {
+      bcrypt.compare(cambio.contraAntigua, hashedPassword, (err, isMatch) => {
         if (err) {
           console.log(err.message);
           return res.status(500).json("Error en la comparación de contraseñas");
         }
 
         if (isMatch) {
-          bcrypt.hash(cambio.contraNueva, saltRounds, (err, hashedPassword) => {
+          bcrypt.hash(cambio.contraNueva, saltRounds, (err, hashedPasswordNew) => {
             if (err) {
               console.log(err.message);
               return res.status(500).json("Error al hashear la contraseña");
@@ -492,14 +491,14 @@ app.post("/api/cuenta/cambiarContra", (req, res) => {
     
             // Insertar el nuevo usuario en la base de datos
             const insertQuery = "update Usuario set password = ? where name = ?";
-            conection.query(insertQuery, cambio.usuario,cambio.contraNueva, (err, result) => {
+            conection.query(insertQuery, [hashedPasswordNew, cambio.usuario], (err, result) => {
               if (err) {
                 console.log(err.message);
                 return res.status(500).json("Error al insertar el usuario");
               }
     
               // Devolver el nombre del usuario después de crearlo
-             res.status(ok);
+              res.status(200).json("Contraseña actualizada con éxito");
             });
           });
           
